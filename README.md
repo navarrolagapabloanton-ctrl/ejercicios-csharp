@@ -1484,11 +1484,11 @@ Ejercicio realizado en C# que transforma una frase haciendo que la primera letra
 
 Entrada:
 
-most trees are blue.
+`most trees are blue.`
 
 Salida:
 
-Most Trees Are Blue.
+`Most Trees Are Blue.`
 
 ## Funcionamiento
 
@@ -1524,6 +1524,26 @@ public static string ToJadenCase(this string phrase)
 
     return newString;
 }
+```
+
+## Conceptos practicados
+
+- Strings
+- Acceso a caracteres mediante índices
+- Bucles `for`
+- Condicionales `if / else`
+- `char.ToUpper()`
+- Concatenación de cadenas
+- Manipulación manual del índice de un bucle
+- Métodos de extensión en C#
+
+## Aprendizaje
+
+En este ejercicio he practicado cómo recorrer una cadena carácter por carácter y detectar el comienzo de cada palabra utilizando los espacios como referencia.
+
+La solución se ha realizado manualmente, sin utilizar métodos como `Split()`, para practicar el manejo de índices, bucles y caracteres.
+
+---
 
 Esta sección irá creciendo a medida que complete nuevas katas y aprenda nuevas herramientas del lenguaje.
 
