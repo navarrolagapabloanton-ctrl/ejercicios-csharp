@@ -1545,6 +1545,195 @@ La solución se ha realizado manualmente, sin utilizar métodos como `Split()`, 
 
 ---
 
+## Categorize New Member — 7 kyu
+
+La función recibe una colección de parejas de números enteros.
+
+Cada pareja contiene:
+
+```text
+[edad, hándicap]
+```
+
+La función debe clasificar a cada miembro como:
+
+- `"Senior"` si tiene al menos 55 años y un hándicap superior a 7.
+- `"Open"` en cualquier otro caso.
+
+Por ejemplo:
+
+```text
+[18, 20] → Open
+[61, 12] → Senior
+[78, 9]  → Senior
+```
+
+### Solución
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public class Kata
+{
+    public static IEnumerable<string> OpenOrSenior(int[][] data)
+    {
+        List<string> list = new List<string>();
+
+        for (int i = 0; i < data.Length; i++)
+        {
+            list.Add(data[i][0] >= 55 && data[i][1] > 7
+                ? "Senior"
+                : "Open");
+        }
+
+        return list;
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        int[][] array =
+        {
+            [18, 20],
+            [45, 2],
+            [61, 12],
+            [37, 6],
+            [21, 21],
+            [78, 9]
+        };
+
+        foreach (string member in Kata.OpenOrSenior(array))
+        {
+            Console.WriteLine(member);
+        }
+    }
+}
+```
+
+### Conceptos reforzados
+
+- Uso de arrays de arrays mediante `int[][]`.
+- Acceso a datos mediante dos índices.
+- Uso de `List<string>`.
+- Uso de `IEnumerable<string>` como tipo de retorno.
+- Recorrido de colecciones mediante `foreach`.
+- Uso de `Add()` para añadir elementos a una lista.
+- Uso del operador ternario.
+- Uso de operadores lógicos `&&`.
+- Separación entre los datos de entrada y los resultados generados.
+
+### Funcionamiento
+
+El parámetro:
+
+```csharp
+int[][] data
+```
+
+representa un array cuyos elementos son otros arrays.
+
+Cada elemento contiene dos valores:
+
+```text
+data[i][0] → edad
+data[i][1] → hándicap
+```
+
+Por ejemplo:
+
+```text
+data[2] → [61, 12]
+
+data[2][0] → 61
+data[2][1] → 12
+```
+
+La condición utilizada es:
+
+```csharp
+data[i][0] >= 55 && data[i][1] > 7
+```
+
+Si ambas condiciones se cumplen, se añade:
+
+```text
+Senior
+```
+
+En caso contrario:
+
+```text
+Open
+```
+
+El operador ternario permite expresar esta decisión directamente:
+
+```csharp
+condicion ? "Senior" : "Open"
+```
+
+y el resultado se añade a la lista:
+
+```csharp
+list.Add(...);
+```
+
+### Aprendizaje
+
+Una de las partes nuevas de esta kata fue trabajar con:
+
+```csharp
+int[][]
+```
+
+Este tipo puede entenderse como un **array de arrays**.
+
+Por ello, para acceder a un valor concreto se utilizan dos índices:
+
+```csharp
+data[i][0]
+data[i][1]
+```
+
+El primer índice selecciona uno de los arrays internos y el segundo índice selecciona uno de sus valores.
+
+También aprendí el significado básico de:
+
+```csharp
+IEnumerable<string>
+```
+
+que representa una secuencia de strings que puede recorrerse.
+
+Para construir el resultado utilicé:
+
+```csharp
+List<string>
+```
+
+y fui añadiendo cada clasificación mediante:
+
+```csharp
+list.Add(...)
+```
+
+Finalmente, la colección devuelta puede recorrerse mediante:
+
+```csharp
+foreach
+```
+
+para mostrar cada resultado individualmente.
+
+---
+
 Esta sección irá creciendo a medida que complete nuevas katas y aprenda nuevas herramientas del lenguaje.
 
 ---

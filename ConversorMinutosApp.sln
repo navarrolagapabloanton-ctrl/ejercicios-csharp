@@ -67,6 +67,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mumbling", "mumbling\mumbli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jaden-casing-strings", "jaden-casing-strings\jaden-casing-strings.csproj", "{7EB71A0E-ABBC-49E8-998A-975D93C76303}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "categorize-new-member", "categorize-new-member\categorize-new-member.csproj", "{D5B3FC77-8A88-497E-97F8-8B9010971ABD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -201,6 +203,10 @@ Global
 		{7EB71A0E-ABBC-49E8-998A-975D93C76303}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EB71A0E-ABBC-49E8-998A-975D93C76303}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EB71A0E-ABBC-49E8-998A-975D93C76303}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5B3FC77-8A88-497E-97F8-8B9010971ABD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5B3FC77-8A88-497E-97F8-8B9010971ABD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5B3FC77-8A88-497E-97F8-8B9010971ABD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5B3FC77-8A88-497E-97F8-8B9010971ABD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
