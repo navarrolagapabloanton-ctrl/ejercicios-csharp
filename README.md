@@ -1992,6 +1992,157 @@ Sin embargo, en esta solución se mantiene la inversión manual porque permite c
 
 ---
 
+## You're a Square! — 7 kyu
+
+La función recibe un número entero y debe indicar si ese número es un **cuadrado perfecto**.
+
+Un cuadrado perfecto es un número que puede obtenerse elevando otro número entero al cuadrado.
+
+Por ejemplo:
+
+```text
+25 = 5²
+36 = 6²
+49 = 7²
+```
+
+Por tanto:
+
+```text
+25 → true
+26 → false
+36 → true
+```
+
+### Solución
+
+```csharp
+using System;
+
+public class Kata
+{
+    public static bool IsSquare(int n)
+    {
+        int sqrt = (int)Math.Sqrt(n);
+        return (int)Math.Pow(sqrt, 2) == n;
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine("Ingresa un número entero:");
+
+        string? entrada = Console.ReadLine();
+
+        int n;
+
+        while (!int.TryParse(entrada, out n))
+        {
+            Console.WriteLine("Error. Ingresa un número entero.");
+            entrada = Console.ReadLine();
+        }
+
+        Console.WriteLine(Kata.IsSquare(n));
+    }
+}
+```
+
+### Conceptos reforzados
+
+- Uso de `Math.Sqrt()` para calcular raíces cuadradas.
+- Uso de `Math.Pow()` para elevar un número a una potencia.
+- Conversión explícita de `double` a `int`.
+- Comparación de valores numéricos.
+- Devolución directa de expresiones booleanas.
+- Uso de `int.TryParse()` para validar entradas.
+- Trabajo con cuadrados perfectos.
+
+### Funcionamiento
+
+Primero se calcula la raíz cuadrada del número:
+
+```csharp
+Math.Sqrt(n)
+```
+
+Como `Math.Sqrt()` devuelve un valor de tipo `double`, se convierte a `int`:
+
+```csharp
+int sqrt = (int)Math.Sqrt(n);
+```
+
+Por ejemplo:
+
+```text
+Math.Sqrt(25) → 5
+Math.Sqrt(26) → 5,09...
+```
+
+Al convertir a `int`:
+
+```text
+(int)5      → 5
+(int)5,09   → 5
+```
+
+Después se vuelve a elevar ese número al cuadrado:
+
+```csharp
+Math.Pow(sqrt, 2)
+```
+
+y se comprueba si el resultado coincide con el número original:
+
+```csharp
+return (int)Math.Pow(sqrt, 2) == n;
+```
+
+Por ejemplo:
+
+```text
+n = 25
+
+sqrt = 5
+5² = 25
+
+25 == 25 → true
+```
+
+Mientras que:
+
+```text
+n = 26
+
+sqrt = 5
+5² = 25
+
+25 == 26 → false
+```
+
+### Aprendizaje
+
+La solución aprovecha la raíz cuadrada del número para obtener una posible base del cuadrado.
+
+Después, esa base se vuelve a elevar al cuadrado para comprobar si se recupera exactamente el valor original.
+
+La expresión:
+
+```csharp
+(int)Math.Pow(sqrt, 2) == n
+```
+
+ya produce directamente un valor booleano, por lo que no es necesario utilizar un `if` para devolver `true` o `false`.
+
+También reforcé el uso de conversiones entre `double` e `int`, ya que tanto `Math.Sqrt()` como `Math.Pow()` trabajan con valores de tipo `double`.
+
+---
+
 Esta sección irá creciendo a medida que complete nuevas katas y aprenda nuevas herramientas del lenguaje.
 
 ---
