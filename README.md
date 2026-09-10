@@ -1734,6 +1734,264 @@ para mostrar cada resultado individualmente.
 
 ---
 
+## Reverse Words — 7 kyu
+
+La función recibe una cadena de texto y debe devolver otra cadena en la que **cada palabra esté escrita al revés**, manteniendo los espacios en su posición correspondiente.
+
+Por ejemplo:
+
+```text
+"Hola mundo"
+
+→
+
+"aloH odnum"
+```
+
+Los espacios también forman parte del resultado, por lo que deben conservarse.
+
+### Solución
+
+```csharp
+using System;
+
+public class Kata
+{
+    public static string ReverseWords(string str)
+    {
+        string reverseString = "";
+        string word = "";
+
+        // Recorro el string
+        for (int i = 0; i < str.Length; i++)
+        {
+            // Si hay una letra, se suma a la nueva palabra.
+            if (str[i] != ' ')
+            {
+                word += str[i];
+            }
+            else
+            {
+                reverseString += str[i];
+            }
+
+            /* Si hay un espacio en el siguiente índice,
+             * se invierte luego la palabra.
+             */
+            if ((i < str.Length - 1 && str[i] != ' '
+                && str[i + 1] == ' ') || (str[i] != ' '
+                && i == str.Length - 1))
+            {
+                for (int f = word.Length - 1; f >= 0; f--)
+                {
+                    // Se invierte la palabra
+                    reverseString += word[f];
+                }
+
+                // Se reinicia word.
+                word = "";
+            }
+        }
+
+        return reverseString;
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine("Ingresa una frase:");
+
+        string? entrada = Console.ReadLine();
+
+        while (string.IsNullOrWhiteSpace(entrada))
+        {
+            Console.WriteLine("No puede estar la frase vacía.");
+            entrada = Console.ReadLine();
+        }
+
+        Console.WriteLine(Kata.ReverseWords(entrada));
+    }
+}
+```
+
+### Conceptos reforzados
+
+- Recorrido de un `string` mediante `for`.
+- Acceso a caracteres mediante índices.
+- Uso de `str[i + 1]` de forma segura.
+- Comprobación de límites con `str.Length`.
+- Uso del cortocircuito de `&&`.
+- Construcción progresiva de strings.
+- Uso de una variable auxiliar para almacenar una palabra.
+- Inversión manual de una cadena mediante un segundo `for`.
+- Bucles anidados.
+- Conservación de espacios.
+- Reinicio de variables auxiliares.
+- Validación de entrada con `string.IsNullOrWhiteSpace()`.
+
+### Funcionamiento
+
+La solución utiliza dos strings auxiliares:
+
+```csharp
+string reverseString = "";
+string word = "";
+```
+
+`word` almacena temporalmente la palabra que se está leyendo.
+
+`reverseString` almacena el resultado final.
+
+El primer bucle recorre todos los caracteres:
+
+```csharp
+for (int i = 0; i < str.Length; i++)
+```
+
+Si el carácter actual no es un espacio:
+
+```csharp
+if (str[i] != ' ')
+{
+    word += str[i];
+}
+```
+
+se añade a la palabra actual.
+
+Si es un espacio:
+
+```csharp
+else
+{
+    reverseString += str[i];
+}
+```
+
+se añade directamente al resultado para conservarlo.
+
+### Detección del final de una palabra
+
+La palabra debe invertirse en dos situaciones:
+
+1. Cuando el carácter siguiente es un espacio.
+2. Cuando se ha llegado al último carácter del string.
+
+La condición utilizada es:
+
+```csharp
+if ((i < str.Length - 1 && str[i] != ' '
+    && str[i + 1] == ' ') || (str[i] != ' '
+    && i == str.Length - 1))
+```
+
+Esta comprobación también evita acceder a:
+
+```csharp
+str[i + 1]
+```
+
+cuando `i` ya se encuentra en la última posición.
+
+Gracias al cortocircuito de `&&`, primero se comprueba:
+
+```csharp
+i < str.Length - 1
+```
+
+y solo si esta condición es verdadera se evalúa:
+
+```csharp
+str[i + 1]
+```
+
+### Inversión de la palabra
+
+Cuando se detecta el final de una palabra, se recorre desde su último carácter hasta el primero:
+
+```csharp
+for (int f = word.Length - 1; f >= 0; f--)
+{
+    reverseString += word[f];
+}
+```
+
+Por ejemplo:
+
+```text
+word = "hola"
+
+f = 3 → a
+f = 2 → l
+f = 1 → o
+f = 0 → h
+
+Resultado:
+
+"aloh"
+```
+
+Después se reinicia la palabra:
+
+```csharp
+word = "";
+```
+
+para comenzar a construir la siguiente.
+
+### Aprendizaje
+
+Este ejercicio lo resolví construyendo primero el algoritmo paso a paso antes de escribir la solución final.
+
+La idea fue dividir el problema en varias tareas:
+
+```text
+1. Recorrer la frase.
+2. Ir almacenando las letras de una palabra.
+3. Detectar cuándo termina esa palabra.
+4. Recorrerla en sentido contrario.
+5. Añadirla al resultado.
+6. Mantener los espacios.
+7. Reiniciar la palabra y continuar.
+```
+
+También fue necesario contemplar un caso especial: la última palabra puede terminar sin que exista un espacio después.
+
+Por ello, además de detectar:
+
+```csharp
+str[i + 1] == ' '
+```
+
+también se comprueba:
+
+```csharp
+i == str.Length - 1
+```
+
+Este ejercicio reforzó especialmente la creación de algoritmos a partir de un problema escrito, en lugar de depender directamente de métodos ya preparados del lenguaje.
+
+### Otra posible aproximación
+
+La misma kata también puede resolverse utilizando métodos ya incluidos en C#, como:
+
+```csharp
+Split()
+ToCharArray()
+Array.Reverse()
+string.Join()
+```
+
+Sin embargo, en esta solución se mantiene la inversión manual porque permite comprender con claridad cómo se recorren, almacenan e invierten las palabras internamente.
+
+---
+
 Esta sección irá creciendo a medida que complete nuevas katas y aprenda nuevas herramientas del lenguaje.
 
 ---
