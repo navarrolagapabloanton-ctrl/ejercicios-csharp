@@ -2143,6 +2143,280 @@ También reforcé el uso de conversiones entre `double` e `int`, ya que tanto `M
 
 ---
 
+## 🚌 Number of People in the Bus — 7 kyu
+
+La función recibe una lista de paradas de autobús.
+
+Cada parada contiene un array de dos números enteros:
+
+```text
+[personas que suben, personas que bajan]
+```
+
+La función debe devolver cuántas personas permanecen dentro del autobús después de la última parada.
+
+Por ejemplo:
+
+```text
+[3, 0]
+[8, 3]
+[5, 6]
+[10, 8]
+[6, 6]
+```
+
+El cálculo sería:
+
+```text
+Parada 1 → +3 -0 = 3
+Parada 2 → +8 -3 = 8
+Parada 3 → +5 -6 = 7
+Parada 4 → +10 -8 = 9
+Parada 5 → +6 -6 = 9
+```
+
+Resultado:
+
+```text
+9
+```
+
+### Solución
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public class Kata
+{
+    public static int Number(List<int[]> peopleListInOut)
+    {
+        int peopleEnter = 0;
+        int peopleOut = 0;
+
+        for (int i = 0; i < peopleListInOut.Count; i++)
+        {
+            peopleEnter += peopleListInOut[i][0];
+            peopleOut += peopleListInOut[i][1];
+        }
+
+        return peopleEnter - peopleOut;
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        List<int[]> pasajeros =
+        [
+            new int[] { 3, 0 },
+            new int[] { 8, 3 },
+            new int[] { 5, 6 },
+            new int[] { 10, 8 },
+            new int[] { 6, 6 }
+        ];
+
+        Console.WriteLine(Kata.Number(pasajeros));
+    }
+}
+```
+
+### Conceptos reforzados
+
+- Uso de `List<int[]>`.
+- Listas que contienen arrays.
+- Acceso encadenado mediante índices.
+- Uso de `.Count` en una `List`.
+- Uso de acumuladores.
+- Recorrido mediante `for`.
+- Diferencia entre el contenedor exterior y el array interior.
+- Suma y resta de datos almacenados en estructuras anidadas.
+
+### Funcionamiento
+
+El parámetro:
+
+```csharp
+List<int[]> peopleListInOut
+```
+
+representa una lista cuyos elementos son arrays de enteros.
+
+Cada array contiene dos valores:
+
+```text
+[0] → personas que suben
+[1] → personas que bajan
+```
+
+Por ejemplo:
+
+```text
+peopleListInOut[2]
+
+→ [5, 6]
+```
+
+Por tanto:
+
+```csharp
+peopleListInOut[2][0]
+```
+
+devuelve:
+
+```text
+5
+```
+
+y:
+
+```csharp
+peopleListInOut[2][1]
+```
+
+devuelve:
+
+```text
+6
+```
+
+### Comprendiendo los dos índices
+
+La expresión:
+
+```csharp
+peopleListInOut[i][0]
+```
+
+puede entenderse en dos pasos.
+
+Primero:
+
+```csharp
+peopleListInOut[i]
+```
+
+obtiene uno de los arrays almacenados dentro de la lista.
+
+Por ejemplo:
+
+```text
+[8, 3]
+```
+
+Después:
+
+```csharp
+[0]
+```
+
+accede al primer valor de ese array.
+
+Por tanto:
+
+```csharp
+peopleListInOut[i][0]
+```
+
+significa:
+
+```text
+Lista
+  ↓
+Elemento i
+  ↓
+Primer valor del array
+```
+
+Y:
+
+```csharp
+peopleListInOut[i][1]
+```
+
+accede al segundo valor.
+
+### Aprendizaje
+
+Una de las partes importantes de este ejercicio fue comprender mejor cómo funciona:
+
+```csharp
+List<int[]>
+```
+
+Puede leerse como:
+
+```text
+una lista de arrays de int
+```
+
+Es decir, el contenedor exterior es una `List` y cada elemento almacenado dentro es un `int[]`.
+
+Esto explica por qué pueden utilizarse dos índices consecutivos:
+
+```csharp
+peopleListInOut[i][0]
+```
+
+El primer índice selecciona el array dentro de la lista y el segundo selecciona un valor dentro de ese array.
+
+La solución utiliza dos acumuladores:
+
+```csharp
+int peopleEnter = 0;
+int peopleOut = 0;
+```
+
+Uno suma todas las personas que suben y el otro todas las personas que bajan.
+
+Finalmente:
+
+```csharp
+return peopleEnter - peopleOut;
+```
+
+devuelve el número de pasajeros que permanecen dentro del autobús.
+
+### Posible simplificación
+
+También podría utilizarse un único acumulador:
+
+```csharp
+int people = 0;
+
+for (int i = 0; i < peopleListInOut.Count; i++)
+{
+    people += peopleListInOut[i][0];
+    people -= peopleListInOut[i][1];
+}
+
+return people;
+```
+
+O recorrer directamente cada array interno mediante `foreach`:
+
+```csharp
+int people = 0;
+
+foreach (int[] stop in peopleListInOut)
+{
+    people += stop[0];
+    people -= stop[1];
+}
+
+return people;
+```
+
+La solución original se mantiene porque permite ver de forma clara la suma total de personas que entran y la suma total de personas que salen.
+
+---
+
 Esta sección irá creciendo a medida que complete nuevas katas y aprenda nuevas herramientas del lenguaje.
 
 ---

@@ -73,6 +73,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "reverse-words", "reverse-wo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "you-are-a-square", "you-are-a-square\you-are-a-square.csproj", "{0E2D49BC-B3A7-49E6-BCB2-495147BB81C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "number-of-people-in-the-bus", "number-of-people-in-the-bus\number-of-people-in-the-bus.csproj", "{6E88F055-F634-4F11-8A02-A911394D7049}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -219,6 +221,10 @@ Global
 		{0E2D49BC-B3A7-49E6-BCB2-495147BB81C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E2D49BC-B3A7-49E6-BCB2-495147BB81C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E2D49BC-B3A7-49E6-BCB2-495147BB81C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E88F055-F634-4F11-8A02-A911394D7049}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E88F055-F634-4F11-8A02-A911394D7049}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E88F055-F634-4F11-8A02-A911394D7049}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E88F055-F634-4F11-8A02-A911394D7049}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
