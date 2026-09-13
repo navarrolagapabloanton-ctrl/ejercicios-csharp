@@ -2143,7 +2143,7 @@ También reforcé el uso de conversiones entre `double` e `int`, ya que tanto `M
 
 ---
 
-## 🚌 Number of People in the Bus — 7 kyu
+## Number of People in the Bus — 7 kyu
 
 La función recibe una lista de paradas de autobús.
 
@@ -2414,6 +2414,111 @@ return people;
 ```
 
 La solución original se mantiene porque permite ver de forma clara la suma total de personas que entran y la suma total de personas que salen.
+
+---
+
+# Square Every Digit — C#
+
+Ejercicio de Codewars que consiste en elevar al cuadrado cada dígito de un número y concatenar los resultados en el orden original.
+
+## Ejemplos
+
+| Entrada | Cuadrados de los dígitos | Resultado |
+| --- | --- | --- |
+| `0` | `0` | `0` |
+| `9119` | `81`, `1`, `1`, `81` | `811181` |
+| `2091` | `4`, `0`, `81`, `1` | `40811` |
+| `120` | `1`, `4`, `0` | `140` |
+
+## Mi solución
+
+```csharp
+using System;
+
+public class Kata
+{
+    public static int SquareDigits(int n)
+    {
+        string stringNumber = n.ToString();
+        string squareString = "";
+
+        for (int i = 0; i < stringNumber.Length; i++)
+        {
+            int digit = int.Parse(stringNumber[i].ToString());
+            digit *= digit;
+            squareString += digit.ToString();
+        }
+
+        return int.Parse(squareString);
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine(Kata.SquareDigits(0));
+        Console.WriteLine(Kata.SquareDigits(9119));
+        Console.WriteLine(Kata.SquareDigits(2091));
+    }
+}
+```
+
+## Cómo funciona
+
+1. Convierto el número en una cadena con `ToString()`.
+2. Recorro sus caracteres de izquierda a derecha con un bucle `for`.
+3. Convierto cada carácter en un número mediante `int.Parse(stringNumber[i].ToString())`.
+4. Elevo el dígito al cuadrado con `digit *= digit`, equivalente a `digit = digit * digit`.
+5. Concateno cada cuadrado en `squareString`.
+6. Convierto la cadena final en un `int` y lo devuelvo.
+
+El cero se procesa igual que cualquier otro dígito, sin necesitar una condición especial.
+
+### Conversión de cada dígito
+
+```csharp
+int digit = int.Parse(stringNumber[i].ToString());
+```
+
+Esta instrucción realiza tres pasos:
+
+- `stringNumber[i]` obtiene un carácter, como `'9'`.
+- `.ToString()` lo convierte en una cadena, como `"9"`.
+- `int.Parse(...)` convierte esa cadena en el número entero `9`.
+
+## Salida esperada
+
+```text
+0
+811181
+40811
+```
+
+## Conceptos practicados
+
+- Conversión entre números, caracteres y cadenas.
+- Recorrido de un `string` mediante índices y la propiedad `Length`.
+- Bucles `for`.
+- Multiplicación y asignación compuesta con `*=`.
+- Concatenación de cadenas con `+=`.
+- Métodos estáticos con parámetros y valor de retorno.
+
+## Aprendizaje
+
+Mi primer enfoque consistía en extraer cada dígito con `% 10` y eliminarlo mediante la división entera `/ 10`. Como eso recorre el número de derecha a izquierda, intenté invertirlo primero.
+
+Sin embargo, convertir una cadena invertida como `"021"` en un entero elimina el cero inicial y hace que se pierda un dígito del número original.
+
+Al trabajar directamente con un `string`, puedo recorrer los dígitos en su orden original y conservar los ceros. La solución queda más sencilla.
+
+También he practicado la reutilización de una variable: como no necesito conservar el dígito original, guardo su cuadrado en la propia variable `digit`.
+
+La idea que me llevo es preguntarme si conviene tratar un número como una cantidad o como una secuencia de dígitos.
+
+## Alcance
+
+La solución está pensada para números enteros no negativos cuyo resultado concatenado quepa en un `int`.
 
 ---
 

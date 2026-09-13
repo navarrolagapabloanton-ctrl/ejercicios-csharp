@@ -75,6 +75,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "you-are-a-square", "you-are
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "number-of-people-in-the-bus", "number-of-people-in-the-bus\number-of-people-in-the-bus.csproj", "{6E88F055-F634-4F11-8A02-A911394D7049}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "square-every-digit", "square-every-digit\square-every-digit.csproj", "{A24F5602-8E3F-41A1-B1DC-04B05358C3A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -225,6 +227,10 @@ Global
 		{6E88F055-F634-4F11-8A02-A911394D7049}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E88F055-F634-4F11-8A02-A911394D7049}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E88F055-F634-4F11-8A02-A911394D7049}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A24F5602-8E3F-41A1-B1DC-04B05358C3A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A24F5602-8E3F-41A1-B1DC-04B05358C3A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A24F5602-8E3F-41A1-B1DC-04B05358C3A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A24F5602-8E3F-41A1-B1DC-04B05358C3A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
