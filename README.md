@@ -2760,6 +2760,211 @@ En esta solución mantengo la conversión manual para comprender el algoritmo ut
 
 ---
 
+## Odd or Even? — 7 kyu
+
+La función recibe un array de números enteros y debe determinar si la suma de todos sus elementos es **par** o **impar**.
+
+Debe devolver:
+
+- `"even"` si la suma es par.
+- `"odd"` si la suma es impar.
+
+Si el array está vacío, su suma se considera `0`, por lo que el resultado debe ser:
+
+```text
+"even"
+```
+
+### Solución
+
+```csharp
+public class Kata
+{
+    public static string OddOrEven(int[] array)
+    {
+        int sum = 0;
+
+        foreach (int number in array)
+        {
+            sum += number;
+        }
+
+        return sum % 2 == 0 ? "even" : "odd";
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        int[] array = { 0 };
+        int[] array2 = { 0, 1, 4 };
+        int[] array3 = { 0, -1, -5 };
+        int[] emptyArray = { };
+
+        Console.WriteLine(Kata.OddOrEven(array));
+        Console.WriteLine(Kata.OddOrEven(array2));
+        Console.WriteLine(Kata.OddOrEven(array3));
+        Console.WriteLine(Kata.OddOrEven(emptyArray));
+    }
+}
+```
+
+### Ejemplos
+
+```text
+[0]
+
+Suma = 0
+Resultado = "even"
+```
+
+```text
+[0, 1, 4]
+
+Suma = 5
+Resultado = "odd"
+```
+
+```text
+[0, -1, -5]
+
+Suma = -6
+Resultado = "even"
+```
+
+```text
+[]
+
+Suma = 0
+Resultado = "even"
+```
+
+### Conceptos reforzados
+
+- Recorrido de arrays mediante `foreach`.
+- Uso de acumuladores.
+- Suma de elementos de una colección.
+- Uso del operador módulo `%`.
+- Comprobación de números pares e impares.
+- Uso del operador ternario.
+- Devolución directa de un resultado a partir de una condición booleana.
+- Comportamiento de un `foreach` sobre un array vacío.
+
+### Funcionamiento
+
+Primero se crea un acumulador:
+
+```csharp
+int sum = 0;
+```
+
+Después se recorren todos los números del array:
+
+```csharp
+foreach (int number in array)
+{
+    sum += number;
+}
+```
+
+Cada número se añade al total almacenado en `sum`.
+
+Una vez terminada la suma, se comprueba el resto de dividir el resultado entre `2`:
+
+```csharp
+sum % 2
+```
+
+Si el resto es `0`, el número es par:
+
+```csharp
+sum % 2 == 0
+```
+
+La función utiliza un operador ternario para devolver directamente el resultado:
+
+```csharp
+return sum % 2 == 0 ? "even" : "odd";
+```
+
+Esto equivale a:
+
+```csharp
+if (sum % 2 == 0)
+{
+    return "even";
+}
+else
+{
+    return "odd";
+}
+```
+
+### Array vacío
+
+Un array vacío puede declararse como:
+
+```csharp
+int[] emptyArray = { };
+```
+
+Como no contiene ningún elemento, el `foreach` no ejecuta ninguna iteración:
+
+```csharp
+int sum = 0;
+
+foreach (int number in emptyArray)
+{
+    sum += number;
+}
+```
+
+Por tanto, `sum` sigue valiendo:
+
+```text
+0
+```
+
+Y como:
+
+```text
+0 % 2 = 0
+```
+
+el resultado es:
+
+```text
+"even"
+```
+
+No es necesario añadir ninguna condición especial para este caso.
+
+### Aprendizaje
+
+Esta kata refuerza un patrón habitual al trabajar con colecciones:
+
+```text
+1. Crear un acumulador.
+2. Recorrer los elementos.
+3. Actualizar el acumulador.
+4. Evaluar el resultado final.
+```
+
+También permite utilizar directamente una expresión booleana dentro de un operador ternario:
+
+```csharp
+sum % 2 == 0 ? "even" : "odd"
+```
+
+evitando un `if/else` cuando únicamente se necesita elegir entre dos valores.
+
+---
+
 Esta sección irá creciendo a medida que complete nuevas katas y aprenda nuevas herramientas del lenguaje.
 
 ---
