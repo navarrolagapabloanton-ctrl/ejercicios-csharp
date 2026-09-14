@@ -2522,6 +2522,244 @@ La solución está pensada para números enteros no negativos cuyo resultado con
 
 ---
 
+## Binary Addition — 7 kyu
+
+La función recibe dos números enteros, los suma y devuelve el resultado representado en **binario** como un `string`.
+
+Por ejemplo:
+
+```text
+1 + 1 = 2
+2 en binario = 10
+```
+
+Por tanto:
+
+```text
+AddBinary(1, 1) → "10"
+```
+
+Otro ejemplo:
+
+```text
+5 + 9 = 14
+14 en binario = 1110
+```
+
+### Solución
+
+```csharp
+using System;
+
+public static class Kata
+{
+    public static string AddBinary(int a, int b)
+    {
+        int suma = a + b;
+
+        if (suma == 0)
+        {
+            return "0";
+        }
+
+        string reverseBinaryNumber = "";
+
+        while (suma != 0)
+        {
+            int rest = suma % 2;
+            reverseBinaryNumber += rest;
+
+            suma /= 2;
+        }
+
+        string binaryNumber = "";
+
+        for (int i = reverseBinaryNumber.Length - 1;
+            i >= 0; i--)
+        {
+            binaryNumber += reverseBinaryNumber[i];
+        }
+
+        return binaryNumber;
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine(Kata.AddBinary(1, 1));
+    }
+}
+```
+
+### Conceptos reforzados
+
+- Conversión manual de decimal a binario.
+- Uso del operador módulo `%`.
+- División entera entre valores `int`.
+- Uso de bucles `while`.
+- Inversión manual de un `string`.
+- Construcción progresiva de cadenas.
+- Conversión automática de valores numéricos al concatenarlos con un `string`.
+- Tratamiento de casos especiales.
+- Representación de números en distintas bases.
+
+### Funcionamiento
+
+Primero se suman los dos números:
+
+```csharp
+int suma = a + b;
+```
+
+Si el resultado es `0`, se devuelve directamente:
+
+```csharp
+return "0";
+```
+
+Esto es necesario porque, si `suma` vale `0`, el bucle principal no llegaría a ejecutarse.
+
+### Conversión a binario
+
+Para convertir el número a binario se realizan divisiones sucesivas entre `2`.
+
+En cada vuelta se obtiene el resto:
+
+```csharp
+int rest = suma % 2;
+```
+
+Ese resto siempre será `0` o `1`.
+
+Después se añade al string:
+
+```csharp
+reverseBinaryNumber += rest;
+```
+
+Al concatenar un `int` con un `string`, C# convierte automáticamente el número a su representación textual.
+
+Finalmente se divide el número entre `2`:
+
+```csharp
+suma /= 2;
+```
+
+Como `suma` es un `int`, la división es entera.
+
+Por ejemplo:
+
+```text
+5 / 2 = 2
+2 / 2 = 1
+1 / 2 = 0
+```
+
+Los decimales se descartan.
+
+### Ejemplo paso a paso
+
+Para convertir `14` a binario:
+
+```text
+14 % 2 = 0
+14 / 2 = 7
+
+7 % 2 = 1
+7 / 2 = 3
+
+3 % 2 = 1
+3 / 2 = 1
+
+1 % 2 = 1
+1 / 2 = 0
+```
+
+Los restos obtenidos son:
+
+```text
+0 1 1 1
+```
+
+pero aparecen en orden inverso.
+
+Por eso se recorre el string desde el final:
+
+```csharp
+for (int i = reverseBinaryNumber.Length - 1; i >= 0; i--)
+{
+    binaryNumber += reverseBinaryNumber[i];
+}
+```
+
+Resultado:
+
+```text
+1110
+```
+
+### Aprendizaje
+
+La parte principal de esta kata fue comprender cómo convertir manualmente un número decimal a binario.
+
+El algoritmo se basa en:
+
+```text
+1. Dividir entre 2.
+2. Guardar el resto.
+3. Volver a dividir el cociente entre 2.
+4. Repetir hasta llegar a 0.
+5. Leer los restos en orden inverso.
+```
+
+También aprendí que una división entre dos valores `int` produce una división entera.
+
+Por ejemplo:
+
+```csharp
+1 / 2
+```
+
+produce:
+
+```text
+0
+```
+
+y no `0.5`.
+
+### Método incluido en C#
+
+C# también permite realizar directamente esta conversión:
+
+```csharp
+Convert.ToString(numero, 2);
+```
+
+El segundo argumento indica la base numérica.
+
+Por ejemplo:
+
+```csharp
+Convert.ToString(14, 2)
+```
+
+devuelve:
+
+```text
+"1110"
+```
+
+En esta solución mantengo la conversión manual para comprender el algoritmo utilizado para transformar un número decimal a binario.
+
+---
+
 Esta sección irá creciendo a medida que complete nuevas katas y aprenda nuevas herramientas del lenguaje.
 
 ---

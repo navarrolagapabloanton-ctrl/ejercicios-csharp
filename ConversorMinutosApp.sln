@@ -77,6 +77,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "number-of-people-in-the-bus
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "square-every-digit", "square-every-digit\square-every-digit.csproj", "{A24F5602-8E3F-41A1-B1DC-04B05358C3A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "binary-addition", "binary-addition\binary-addition.csproj", "{BCD41144-2769-4795-8B62-378D559C346F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -231,6 +233,10 @@ Global
 		{A24F5602-8E3F-41A1-B1DC-04B05358C3A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A24F5602-8E3F-41A1-B1DC-04B05358C3A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A24F5602-8E3F-41A1-B1DC-04B05358C3A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCD41144-2769-4795-8B62-378D559C346F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCD41144-2769-4795-8B62-378D559C346F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCD41144-2769-4795-8B62-378D559C346F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCD41144-2769-4795-8B62-378D559C346F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
