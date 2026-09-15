@@ -2965,6 +2965,267 @@ evitando un `if/else` cuando únicamente se necesita elegir entre dos valores.
 
 ---
 
+## Beginner Series #3 Sum of Numbers — 7 kyu
+
+La función recibe dos números enteros `a` y `b`, que pueden ser positivos o negativos.
+
+Debe devolver la suma de todos los números comprendidos entre ambos, incluyendo los propios extremos.
+
+Por ejemplo:
+
+```text
+(3, 5)
+
+3 + 4 + 5 = 12
+```
+
+También debe funcionar si el segundo número es menor:
+
+```text
+(3, -1)
+
+3 + 2 + 1 + 0 + (-1) = 5
+```
+
+Si ambos números son iguales, simplemente se devuelve ese mismo valor.
+
+### Solución
+
+```csharp
+using System;
+
+public class Sum
+{
+    public int GetSum(int a, int b)
+    {
+        int sum = a;
+
+        if (a == b)
+        {
+            return a;
+        }
+        else if (a < b)
+        {
+            while (a != b)
+            {
+                a++;
+                sum += a;
+            }
+        }
+        else
+        {
+            while (a != b)
+            {
+                a--;
+                sum += a;
+            }
+        }
+
+        return sum;
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        var sum = new Sum();
+
+        Console.WriteLine(sum.GetSum(3, 5));
+        Console.WriteLine(sum.GetSum(3, -1));
+        Console.WriteLine(sum.GetSum(1, 0));
+        Console.WriteLine(sum.GetSum(1, 2));
+        Console.WriteLine(sum.GetSum(0, 1));
+        Console.WriteLine(sum.GetSum(1, 1));
+        Console.WriteLine(sum.GetSum(-1, 0));
+        Console.WriteLine(sum.GetSum(-1, 2));
+    }
+}
+```
+
+### Conceptos reforzados
+
+- Uso de acumuladores.
+- Uso de `while`.
+- Incremento y decremento con `++` y `--`.
+- Comparación de valores con `==`, `<` y `>`.
+- Uso de `if / else if / else`.
+- Trabajo con números positivos y negativos.
+- Inclusión de los valores extremos en una suma.
+- Pruebas con distintos casos de entrada.
+- Modificación de parámetros dentro de un método.
+
+### Funcionamiento
+
+La variable:
+
+```csharp
+int sum = a;
+```
+
+empieza guardando el primer número, ya que este también debe formar parte de la suma.
+
+Después se distinguen tres casos.
+
+#### Caso 1: ambos números son iguales
+
+```csharp
+if (a == b)
+{
+    return a;
+}
+```
+
+Por ejemplo:
+
+```text
+(4, 4)
+
+Resultado = 4
+```
+
+No es necesario realizar ninguna iteración.
+
+#### Caso 2: `a` es menor que `b`
+
+Si:
+
+```text
+a = 3
+b = 5
+```
+
+se incrementa `a` hasta alcanzar `b`:
+
+```csharp
+while (a != b)
+{
+    a++;
+    sum += a;
+}
+```
+
+El proceso sería:
+
+```text
+sum = 3
+
+a = 4
+sum = 7
+
+a = 5
+sum = 12
+```
+
+Resultado:
+
+```text
+12
+```
+
+#### Caso 3: `a` es mayor que `b`
+
+Si:
+
+```text
+a = 3
+b = -1
+```
+
+se decrementa `a` hasta alcanzar `b`:
+
+```csharp
+while (a != b)
+{
+    a--;
+    sum += a;
+}
+```
+
+El proceso sería:
+
+```text
+sum = 3
+
+a = 2
+sum = 5
+
+a = 1
+sum = 6
+
+a = 0
+sum = 6
+
+a = -1
+sum = 5
+```
+
+Resultado:
+
+```text
+5
+```
+
+### Aprendizaje
+
+La principal dificultad de esta kata fue tener en cuenta que los números pueden llegar en cualquier orden.
+
+Por ello, dividí el problema en tres situaciones:
+
+```text
+a == b
+a < b
+a > b
+```
+
+Si `a` es menor que `b`, avanzo mediante:
+
+```csharp
+a++;
+```
+
+Si `a` es mayor que `b`, avanzo en sentido contrario mediante:
+
+```csharp
+a--;
+```
+
+En ambos casos se continúa hasta que:
+
+```csharp
+a == b
+```
+
+También probé diferentes combinaciones de números positivos, negativos, iguales y con el orden invertido para comprobar que el algoritmo funcionara en distintos casos.
+
+### Otra posible aproximación
+
+También se podría buscar primero cuál es el número menor y cuál es el mayor:
+
+```csharp
+int min = Math.Min(a, b);
+int max = Math.Max(a, b);
+```
+
+y después recorrer siempre el intervalo en una sola dirección:
+
+```csharp
+int sum = 0;
+
+for (int i = min; i <= max; i++)
+{
+    sum += i;
+}
+```
+
+Esta alternativa evita separar el problema en dos recorridos distintos, aunque la solución original permite ver claramente cómo cambia el recorrido dependiendo del orden de los números.
+
+---
+
 Esta sección irá creciendo a medida que complete nuevas katas y aprenda nuevas herramientas del lenguaje.
 
 ---

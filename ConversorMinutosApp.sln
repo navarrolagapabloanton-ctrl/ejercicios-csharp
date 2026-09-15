@@ -81,6 +81,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "binary-addition", "binary-a
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "odd-or-even", "odd-or-even\odd-or-even.csproj", "{9151E0D6-5265-4059-ACA4-88BDF30AB127}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "beginner-series-3-sum-of-numbers", "beginner-series-3-sum-of-numbers\beginner-series-3-sum-of-numbers.csproj", "{40C051C6-9C87-432E-A4D6-7FBBB7D4B9B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -243,6 +245,10 @@ Global
 		{9151E0D6-5265-4059-ACA4-88BDF30AB127}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9151E0D6-5265-4059-ACA4-88BDF30AB127}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9151E0D6-5265-4059-ACA4-88BDF30AB127}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40C051C6-9C87-432E-A4D6-7FBBB7D4B9B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40C051C6-9C87-432E-A4D6-7FBBB7D4B9B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40C051C6-9C87-432E-A4D6-7FBBB7D4B9B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40C051C6-9C87-432E-A4D6-7FBBB7D4B9B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
