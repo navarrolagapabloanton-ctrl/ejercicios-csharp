@@ -3226,6 +3226,311 @@ Esta alternativa evita separar el problema en dos recorridos distintos, aunque l
 
 ---
 
+## Remove the Minimum — 7 kyu
+
+La función recibe una lista de números enteros y debe devolver una nueva lista en la que se haya eliminado el valor más pequeño.
+
+Requisitos:
+
+- No se puede modificar la lista original.
+- Si el valor mínimo aparece varias veces, solo se elimina la primera aparición.
+- No se puede cambiar el orden de los demás elementos.
+- Si la lista está vacía, debe devolverse una lista vacía.
+
+Por ejemplo:
+
+```text
+[1, 2, 3, 4, 5]
+
+→
+
+[2, 3, 4, 5]
+```
+
+Si el mínimo aparece varias veces:
+
+```text
+[2, 2, 1, 2, 1]
+
+→
+
+[2, 2, 2, 1]
+```
+
+Solo se elimina el primer `1`.
+
+### Solución
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public class Remover
+{
+    public static List<int> RemoveSmallest(List<int> numbers)
+    {
+        List<int> newNumbers = new List<int>(numbers);
+
+        if (newNumbers.Count == 0)
+        {
+            return newNumbers;
+        }
+
+        int min = newNumbers[0];
+
+        foreach (int number in newNumbers)
+        {
+            if (min > number)
+            {
+                min = number;
+            }
+        }
+
+        newNumbers.Remove(min);
+
+        return newNumbers;
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        List<int> score1 = new List<int>()
+        {
+            1, 2, 3, 4, 5
+        };
+
+        Console.WriteLine("Lista 1:\n");
+
+        foreach (int number in Remover.RemoveSmallest(score1))
+        {
+            Console.Write($"{number}, ");
+        }
+
+        Console.WriteLine("\nLista 2:\n");
+
+        List<int> score2 = new List<int>()
+        {
+            5, 3, 2, 1, 4
+        };
+
+        foreach (int number in Remover.RemoveSmallest(score2))
+        {
+            Console.Write($"{number}, ");
+        }
+
+        Console.WriteLine("\nLista 3:\n");
+
+        List<int> score3 = new List<int>()
+        {
+            2, 2, 1, 2, 1
+        };
+
+        foreach (int number in Remover.RemoveSmallest(score3))
+        {
+            Console.Write($"{number}, ");
+        }
+    }
+}
+```
+
+### Conceptos reforzados
+
+- Uso de `List<int>`.
+- Creación de una copia de una lista.
+- Diferencia entre referencia y copia.
+- Recorrido de listas mediante `foreach`.
+- Búsqueda manual del valor mínimo.
+- Uso de `.Count`.
+- Uso de `Remove()`.
+- Diferencia entre `Remove()` y `RemoveAt()`.
+- Conservación del orden de una colección.
+- Tratamiento de listas vacías.
+- Modificación segura de listas fuera de un `foreach`.
+
+### Copiar una lista
+
+La asignación:
+
+```csharp
+List<int> newNumbers = numbers;
+```
+
+no crea una nueva lista.
+
+Las dos variables apuntarían al mismo objeto, por lo que modificar una también modificaría la otra.
+
+Para crear una copia real se utiliza:
+
+```csharp
+List<int> newNumbers = new List<int>(numbers);
+```
+
+De esta forma:
+
+```text
+numbers     → lista original
+newNumbers  → nueva lista independiente
+```
+
+y se puede modificar `newNumbers` sin alterar `numbers`.
+
+### Lista vacía
+
+Antes de acceder a:
+
+```csharp
+newNumbers[0]
+```
+
+se comprueba si la lista está vacía:
+
+```csharp
+if (newNumbers.Count == 0)
+{
+    return newNumbers;
+}
+```
+
+Esto evita intentar acceder a un índice que no existe.
+
+### Buscar el mínimo
+
+Se utiliza el primer elemento como valor mínimo inicial:
+
+```csharp
+int min = newNumbers[0];
+```
+
+Después se recorren todos los elementos:
+
+```csharp
+foreach (int number in newNumbers)
+{
+    if (min > number)
+    {
+        min = number;
+    }
+}
+```
+
+Si aparece un número menor que el mínimo actual, se actualiza:
+
+```csharp
+min = number;
+```
+
+### `Remove()` y `RemoveAt()`
+
+Una de las diferencias importantes aprendidas en esta kata es la diferencia entre:
+
+```csharp
+Remove()
+```
+
+y:
+
+```csharp
+RemoveAt()
+```
+
+`Remove()` elimina por **valor**:
+
+```csharp
+newNumbers.Remove(3);
+```
+
+elimina la primera aparición del valor `3`.
+
+Por ejemplo:
+
+```text
+[2, 3, 1, 3]
+
+Remove(3)
+
+→
+
+[2, 1, 3]
+```
+
+En cambio, `RemoveAt()` elimina por **índice**:
+
+```csharp
+newNumbers.RemoveAt(2);
+```
+
+elimina el elemento situado en la posición `2`.
+
+Por ejemplo:
+
+```text
+[10, 20, 30, 40]
+
+RemoveAt(2)
+
+→
+
+[10, 20, 40]
+```
+
+En esta kata `Remove()` resulta especialmente útil porque elimina automáticamente la primera aparición del valor mínimo:
+
+```csharp
+newNumbers.Remove(min);
+```
+
+Esto cumple también el requisito de eliminar el mínimo con el índice más bajo cuando aparece varias veces.
+
+### Modificar una lista durante un `foreach`
+
+Durante este recorrido:
+
+```csharp
+foreach (int number in newNumbers)
+{
+    ...
+}
+```
+
+la lista solo se consulta.
+
+La modificación:
+
+```csharp
+newNumbers.Remove(min);
+```
+
+se realiza después de terminar el `foreach`.
+
+Esto es importante porque modificar el tamaño de una colección mientras un `foreach` la está recorriendo puede provocar una excepción.
+
+### Otra posible solución
+
+C# también permite obtener directamente el valor mínimo mediante LINQ:
+
+```csharp
+int min = newNumbers.Min();
+```
+
+Por ejemplo:
+
+```csharp
+using System.Linq;
+
+int min = newNumbers.Min();
+newNumbers.Remove(min);
+```
+
+Esta versión es más corta, pero en la solución principal mantengo la búsqueda manual para practicar el recorrido de listas y comprender cómo se encuentra el valor mínimo.
+
+---
+
 Esta sección irá creciendo a medida que complete nuevas katas y aprenda nuevas herramientas del lenguaje.
 
 ---
