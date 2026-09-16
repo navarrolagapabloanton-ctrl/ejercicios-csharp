@@ -85,6 +85,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "beginner-series-3-sum-of-nu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "remove-the-minum", "remove-the-minum\remove-the-minum.csproj", "{D36CEFA2-8D01-4F07-87C5-BDF473FF1E24}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shortest-word", "shortest-word\shortest-word.csproj", "{06647A4A-39F2-47E2-BAC5-22602F41B26C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -255,6 +257,10 @@ Global
 		{D36CEFA2-8D01-4F07-87C5-BDF473FF1E24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D36CEFA2-8D01-4F07-87C5-BDF473FF1E24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D36CEFA2-8D01-4F07-87C5-BDF473FF1E24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06647A4A-39F2-47E2-BAC5-22602F41B26C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06647A4A-39F2-47E2-BAC5-22602F41B26C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06647A4A-39F2-47E2-BAC5-22602F41B26C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06647A4A-39F2-47E2-BAC5-22602F41B26C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

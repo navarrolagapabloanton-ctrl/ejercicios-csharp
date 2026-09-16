@@ -3531,6 +3531,233 @@ Esta versión es más corta, pero en la solución principal mantengo la búsqued
 
 ---
 
+## Shortest Word — 7 kyu
+
+La función recibe una cadena de texto formada por varias palabras y debe devolver la longitud de la palabra más corta.
+
+Por ejemplo:
+
+```text
+"La casa donde vamos"
+
+Palabras:
+
+"La"     → 2
+"casa"   → 4
+"donde"  → 5
+"vamos"  → 5
+
+Resultado:
+
+2
+```
+
+### Solución
+
+```csharp
+public class Kata
+{
+    public static int FindShort(string s)
+    {
+        string word = "";
+        int minLength = s.Length;
+
+        for (int i = 0; i < s.Length; i++)
+        {
+            if (s[i] != ' ')
+            {
+                word += s[i];
+
+                if (i == s.Length - 1 || s[i + 1] == ' ')
+                {
+                    if (minLength > word.Length)
+                    {
+                        minLength = word.Length;
+                    }
+                }
+            }
+            else
+            {
+                word = "";
+            }
+        }
+
+        return minLength;
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine(Kata.FindShort(
+            "La casa donde vamos a vivir es muy " +
+            "pequeña pero al menos nos da " +
+            "la oportunidad de poder vivir " +
+            "juntos."
+        ));
+    }
+}
+```
+
+### Conceptos reforzados
+
+- Recorrido de un `string` mediante `for`.
+- Acceso a caracteres mediante índices.
+- Construcción progresiva de palabras.
+- Uso de `Length`.
+- Detección del final de una palabra.
+- Uso seguro de `s[i + 1]`.
+- Cortocircuito con el operador `||`.
+- Comparación para encontrar un valor mínimo.
+- Reinicio de variables auxiliares.
+
+### Funcionamiento
+
+La variable:
+
+```csharp
+string word = "";
+```
+
+se utiliza para ir almacenando la palabra actual.
+
+La variable:
+
+```csharp
+int minLength = s.Length;
+```
+
+guarda la longitud mínima encontrada hasta el momento.
+
+Se inicializa con la longitud total del string para comenzar con un valor suficientemente grande.
+
+### Construcción de cada palabra
+
+Mientras el carácter actual no sea un espacio:
+
+```csharp
+if (s[i] != ' ')
+{
+    word += s[i];
+}
+```
+
+se añade a la palabra actual.
+
+Por ejemplo:
+
+```text
+c
+ca
+cas
+casa
+```
+
+### Detectar el final de una palabra
+
+Una palabra puede terminar de dos formas:
+
+1. El siguiente carácter es un espacio.
+2. Se ha llegado al último carácter del string.
+
+Por eso se utiliza:
+
+```csharp
+if (i == s.Length - 1 || s[i + 1] == ' ')
+```
+
+Esto permite detectar tanto palabras situadas en medio de la frase como la última palabra.
+
+Además, el operador `||` realiza cortocircuito.
+
+Si:
+
+```csharp
+i == s.Length - 1
+```
+
+es `true`, C# no necesita evaluar:
+
+```csharp
+s[i + 1]
+```
+
+evitando intentar acceder a una posición que no existe.
+
+### Buscar la palabra más corta
+
+Cuando se detecta el final de una palabra, se compara su longitud con el mínimo actual:
+
+```csharp
+if (minLength > word.Length)
+{
+    minLength = word.Length;
+}
+```
+
+Si la palabra actual es más corta, se actualiza el valor mínimo.
+
+### Reiniciar la palabra
+
+Cuando aparece un espacio:
+
+```csharp
+else
+{
+    word = "";
+}
+```
+
+se vacía la variable para comenzar a construir la siguiente palabra.
+
+### Aprendizaje
+
+Esta kata reutiliza una idea parecida a otros ejercicios anteriores: recorrer un string carácter a carácter y detectar cuándo termina una palabra.
+
+El algoritmo puede resumirse como:
+
+```text
+1. Recorrer la frase.
+2. Construir cada palabra.
+3. Detectar cuándo termina.
+4. Comparar su longitud con la mínima encontrada.
+5. Reiniciar la palabra.
+6. Continuar hasta terminar el string.
+```
+
+También reforcé el uso seguro de:
+
+```csharp
+s[i + 1]
+```
+
+comprobando primero si el índice actual es el último del string.
+
+### Otra posible aproximación
+
+C# permite dividir una frase en palabras mediante:
+
+```csharp
+s.Split(' ')
+```
+
+y con LINQ se podría obtener directamente la longitud mínima:
+
+```csharp
+using System.Linq;
+
+return s.Split(' ').Min(word => word.Length);
+```
+
+En esta solución se mantiene el recorrido manual para practicar la creación del algoritmo y el manejo de índices.
+
+---
+
 Esta sección irá creciendo a medida que complete nuevas katas y aprenda nuevas herramientas del lenguaje.
 
 ---
