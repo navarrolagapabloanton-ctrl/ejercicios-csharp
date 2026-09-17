@@ -3758,6 +3758,201 @@ En esta solución se mantiene el recorrido manual para practicar la creación de
 
 ---
 
+## Exes and Ohs — 7 kyu
+
+La función recibe una cadena de texto y debe comprobar si contiene la misma cantidad de letras `x` y `o`.
+
+Debe cumplir estas condiciones:
+
+- No se distingue entre mayúsculas y minúsculas.
+- La cadena puede contener cualquier otro carácter.
+- Si no contiene ninguna `x` ni ninguna `o`, el resultado también debe ser `true`.
+
+Por ejemplo:
+
+```text
+"ooxx"   → true
+"xooxx"  → false
+"ooxXm"  → true
+"zpzpzpp" → true
+"zzoo"   → false
+```
+
+### Solución con LINQ
+
+```csharp
+using System;
+using System.Linq;
+
+public static class Kata
+{
+    public static bool XO(string input)
+    {
+        int counterO = input.Count(c => char.ToLower(c) == 'o');
+        int counterX = input.Count(c => char.ToLower(c) == 'x');
+
+        return counterO == counterX;
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public static class Program
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine(Kata.XO("ooxx"));
+        Console.WriteLine(Kata.XO("xooxx"));
+        Console.WriteLine(Kata.XO("ooxXm"));
+        Console.WriteLine(Kata.XO("zpzpzpp"));
+        Console.WriteLine(Kata.XO("zzoo"));
+    }
+}
+```
+
+### Primera solución sin LINQ
+
+Antes de utilizar LINQ, resolví el ejercicio manualmente mediante un `foreach` y dos contadores:
+
+```csharp
+public static class Kata
+{
+    public static bool XO(string input)
+    {
+        int counterO = 0;
+        int counterX = 0;
+
+        foreach (char character in input)
+        {
+            if (char.ToLower(character) == 'o')
+            {
+                counterO++;
+            }
+
+            if (char.ToLower(character) == 'x')
+            {
+                counterX++;
+            }
+        }
+
+        return counterO == counterX;
+    }
+}
+```
+
+Esta versión recorre todos los caracteres de la cadena y aumenta el contador correspondiente cada vez que encuentra una `o` o una `x`.
+
+### Uso de LINQ
+
+Con LINQ, el recorrido y el contador pueden resumirse mediante:
+
+```csharp
+input.Count(c => char.ToLower(c) == 'o')
+```
+
+Esta expresión puede leerse como:
+
+```text
+Cuenta todos los caracteres c
+que, al pasarlos a minúscula,
+sean iguales a 'o'.
+```
+
+Para las `x` se realiza la misma operación:
+
+```csharp
+input.Count(c => char.ToLower(c) == 'x')
+```
+
+Los resultados son dos valores enteros:
+
+```csharp
+int counterO
+int counterX
+```
+
+que finalmente se comparan:
+
+```csharp
+return counterO == counterX;
+```
+
+Como la comparación ya devuelve un valor booleano, no es necesario utilizar un `if`.
+
+### Caso sin `x` ni `o`
+
+Por ejemplo:
+
+```text
+"zpzpzpp"
+```
+
+produce:
+
+```text
+counterO = 0
+counterX = 0
+```
+
+Por tanto:
+
+```text
+0 == 0
+```
+
+es:
+
+```text
+true
+```
+
+No es necesario añadir ningún caso especial.
+
+### Conceptos reforzados
+
+- Uso de LINQ.
+- Método `Count()` con una condición.
+- Expresiones lambda.
+- Uso de `char.ToLower()`.
+- Comparación de cantidades.
+- Devolución directa de expresiones booleanas.
+- Recorrido de strings como secuencias de caracteres.
+- Paso de una solución manual a una solución más compacta con LINQ.
+
+### Aprendizaje
+
+Esta kata fue una buena introducción práctica a LINQ.
+
+La solución original utilizaba:
+
+```text
+foreach
++
+if
++
+contador
+```
+
+mientras que LINQ permite expresar la misma operación mediante:
+
+```csharp
+Count(...)
+```
+
+Por ejemplo:
+
+```csharp
+input.Count(c => char.ToLower(c) == 'o')
+```
+
+sustituye conceptualmente el recorrido manual y el incremento del contador.
+
+La ventaja de haber realizado primero la solución sin LINQ es que permite entender qué trabajo está realizando internamente `Count()` en lugar de utilizarlo simplemente como una función ya preparada.
+
+---
+
 Esta sección irá creciendo a medida que complete nuevas katas y aprenda nuevas herramientas del lenguaje.
 
 ---
