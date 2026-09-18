@@ -3953,6 +3953,312 @@ La ventaja de haber realizado primero la solución sin LINQ es que permite enten
 
 ---
 
+## Equal Sides Of An Array — 6 kyu
+
+La función recibe un array de números enteros y debe encontrar un índice en el que la suma de todos los elementos situados a la izquierda sea igual a la suma de todos los elementos situados a la derecha.
+
+El valor situado en el propio índice no se incluye en ninguna de las dos sumas.
+
+Si no existe ningún índice que cumpla la condición, se devuelve:
+
+```text
+-1
+```
+
+Por ejemplo:
+
+```text
+[1, 2, 3, 4, 3, 2, 1]
+```
+
+En el índice `3` se encuentra el valor `4`.
+
+A la izquierda:
+
+```text
+1 + 2 + 3 = 6
+```
+
+A la derecha:
+
+```text
+3 + 2 + 1 = 6
+```
+
+Por tanto:
+
+```text
+Resultado = 3
+```
+
+### Solución
+
+```csharp
+public class Kata
+{
+    public static int FindEvenIndex(int[] arr)
+    {
+        int leftSum = 0;
+        int rightSum = 0;
+
+        for (int i = 0; i < arr.Length; i++)
+        {
+            leftSum = 0;
+            rightSum = 0;
+
+            for (int f = 0; f < i; f++)
+            {
+                leftSum += arr[f];
+            }
+
+            for (int h = arr.Length - 1; h > i; h--)
+            {
+                rightSum += arr[h];
+            }
+
+            if (leftSum == rightSum)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        int[] array1 = { 1, 2, 3, 4, 3, 2, 1 };
+        int[] array2 = { 1, 100, 50, -51, 1, 1 };
+        int[] array3 = { 20, 10, -80, 10, 10, 15, 35 };
+        int[] array4 = { 0, 0, 0, 0, 0 };
+
+        Console.WriteLine(Kata.FindEvenIndex(array1));
+        Console.WriteLine(Kata.FindEvenIndex(array2));
+        Console.WriteLine(Kata.FindEvenIndex(array3));
+        Console.WriteLine(Kata.FindEvenIndex(array4));
+    }
+}
+```
+
+### Conceptos reforzados
+
+- Recorrido de arrays mediante `for`.
+- Uso de bucles anidados.
+- Uso de acumuladores.
+- Trabajo con índices.
+- Recorridos de izquierda a derecha y de derecha a izquierda.
+- Comparación de sumas.
+- Uso de `return` para terminar un método al encontrar una solución.
+- Uso de `-1` para representar que no se ha encontrado ningún índice válido.
+- Trabajo con números positivos, negativos y ceros.
+
+### Funcionamiento
+
+El primer `for` recorre cada posición del array:
+
+```csharp
+for (int i = 0; i < arr.Length; i++)
+```
+
+El índice `i` representa la posición que se está comprobando.
+
+Para cada posible índice se reinician las dos sumas:
+
+```csharp
+leftSum = 0;
+rightSum = 0;
+```
+
+### Suma de la izquierda
+
+El primer bucle interno recorre todos los elementos anteriores a `i`:
+
+```csharp
+for (int f = 0; f < i; f++)
+{
+    leftSum += arr[f];
+}
+```
+
+Por ejemplo, si:
+
+```text
+i = 3
+```
+
+se recorren:
+
+```text
+arr[0]
+arr[1]
+arr[2]
+```
+
+pero no:
+
+```text
+arr[3]
+```
+
+### Suma de la derecha
+
+El segundo bucle interno comienza desde el final del array:
+
+```csharp
+for (int h = arr.Length - 1; h > i; h--)
+{
+    rightSum += arr[h];
+}
+```
+
+De esta forma se suman todos los valores situados después del índice actual.
+
+Si:
+
+```text
+i = 3
+```
+
+se recorren las posiciones:
+
+```text
+última posición
+...
+5
+4
+```
+
+sin incluir:
+
+```text
+3
+```
+
+### Comparación
+
+Después de calcular ambas sumas:
+
+```csharp
+if (leftSum == rightSum)
+{
+    return i;
+}
+```
+
+si coinciden, se devuelve inmediatamente el índice encontrado.
+
+Si se recorren todos los índices sin encontrar ninguno válido:
+
+```csharp
+return -1;
+```
+
+### Ejemplo paso a paso
+
+Para:
+
+```text
+[1, 2, 3, 4, 3, 2, 1]
+```
+
+cuando:
+
+```text
+i = 3
+```
+
+la suma izquierda es:
+
+```text
+1 + 2 + 3 = 6
+```
+
+y la suma derecha:
+
+```text
+3 + 2 + 1 = 6
+```
+
+Como:
+
+```text
+6 == 6
+```
+
+se devuelve:
+
+```text
+3
+```
+
+### Casos especiales
+
+Si el índice válido es el primero:
+
+```text
+i = 0
+```
+
+no existen elementos a la izquierda.
+
+Por tanto:
+
+```text
+leftSum = 0
+```
+
+Del mismo modo, si se comprobara el último índice, no existirían elementos a la derecha:
+
+```text
+rightSum = 0
+```
+
+También funciona con arrays formados únicamente por ceros:
+
+```text
+[0, 0, 0, 0, 0]
+```
+
+En el índice `0`:
+
+```text
+izquierda = 0
+derecha = 0
+```
+
+por lo que se devuelve:
+
+```text
+0
+```
+
+### Aprendizaje
+
+La solución se basa en comprobar cada índice posible de forma independiente.
+
+Para cada posición:
+
+```text
+1. Reiniciar las sumas.
+2. Sumar los elementos de la izquierda.
+3. Sumar los elementos de la derecha.
+4. Comparar ambas cantidades.
+5. Devolver el índice si coinciden.
+```
+
+Esta solución utiliza bucles anidados y recalcula las sumas para cada índice.
+
+Es una forma directa de trasladar el enunciado a un algoritmo y permite ver claramente qué elementos pertenecen a cada lado del índice.
+
+---
+
 Esta sección irá creciendo a medida que complete nuevas katas y aprenda nuevas herramientas del lenguaje.
 
 ---

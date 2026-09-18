@@ -89,6 +89,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shortest-word", "shortest-w
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "exes-ands-ohs", "exes-ands-ohs\exes-ands-ohs.csproj", "{0FE5A60F-D9FD-4833-9BC2-EB0A9BB5F933}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "equals-sides-of-an-array", "equals-sides-of-an-array\equals-sides-of-an-array.csproj", "{B4080A26-994C-46B9-A189-8AA5E3740D00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -267,6 +269,10 @@ Global
 		{0FE5A60F-D9FD-4833-9BC2-EB0A9BB5F933}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FE5A60F-D9FD-4833-9BC2-EB0A9BB5F933}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FE5A60F-D9FD-4833-9BC2-EB0A9BB5F933}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4080A26-994C-46B9-A189-8AA5E3740D00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4080A26-994C-46B9-A189-8AA5E3740D00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4080A26-994C-46B9-A189-8AA5E3740D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4080A26-994C-46B9-A189-8AA5E3740D00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
