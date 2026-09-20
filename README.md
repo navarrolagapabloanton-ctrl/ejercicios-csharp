@@ -4259,6 +4259,289 @@ Es una forma directa de trasladar el enunciado a un algoritmo y permite ver clar
 
 ---
 
+## Replace With Alphabet Position — 6 kyu
+
+La función recibe una cadena de texto y debe sustituir cada letra por su posición correspondiente dentro del alfabeto.
+
+Las reglas son:
+
+- `a` corresponde a `1`.
+- `b` corresponde a `2`.
+- ...
+- `z` corresponde a `26`.
+- No se distingue entre mayúsculas y minúsculas.
+- Cualquier carácter que no sea una letra debe ignorarse.
+- Las posiciones deben aparecer separadas por espacios.
+
+Por ejemplo:
+
+```text
+"The sunset sets at twelve o' clock."
+```
+
+produce:
+
+```text
+20 8 5 19 21 14 19 5 20 19 5 20 19 1 20 20 23 5 12 22 5 15 3 12 15 3 11
+```
+
+### Solución
+
+```csharp
+public static class Kata
+{
+    public static string AlphabetPosition(string text)
+    {
+        string newText = "";
+        bool firstSpace = false;
+
+        foreach (char character in text.ToLower())
+        {
+            if (character >= 'a' && character <= 'z')
+            {
+                int intCharacter = (int)character - 96;
+                string stringCharacter = intCharacter.ToString();
+
+                if (!firstSpace)
+                {
+                    newText += stringCharacter;
+                    firstSpace = true;
+                }
+                else
+                {
+                    newText += ' ' + stringCharacter;
+                }
+            }
+        }
+
+        return newText;
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine(
+            Kata.AlphabetPosition(
+                "The sunset sets at twelve o' clock."
+            )
+        );
+    }
+}
+```
+
+### Conceptos reforzados
+
+- Recorrido de un `string` mediante `foreach`.
+- Uso del tipo `char`.
+- Conversión de caracteres mediante `char.ToLower()`.
+- Comparación de caracteres.
+- Uso del valor numérico asociado a un `char`.
+- Conversión explícita de `char` a `int`.
+- Conversión de `int` a `string`.
+- Uso de una variable `bool` para controlar el formato.
+- Filtrado manual de caracteres.
+- Construcción progresiva de un `string`.
+
+### Funcionamiento
+
+Primero se recorre la cadena convirtiendo cada carácter a minúscula:
+
+```csharp
+foreach (char character in text.ToLower())
+```
+
+Esto permite tratar igual:
+
+```text
+'A'
+```
+
+y:
+
+```text
+'a'
+```
+
+### Filtrar únicamente letras
+
+Se comprueba que el carácter esté comprendido entre:
+
+```csharp
+'a'
+```
+
+y:
+
+```csharp
+'z'
+```
+
+mediante:
+
+```csharp
+if (character >= 'a' && character <= 'z')
+```
+
+De esta forma se ignoran:
+
+```text
+espacios
+puntos
+comas
+apóstrofes
+números
+otros símbolos
+```
+
+### Obtener la posición en el alfabeto
+
+Los caracteres tienen asociado un valor numérico.
+
+Por ejemplo:
+
+```text
+'a' → 97
+'b' → 98
+'c' → 99
+```
+
+Como la letra `a` debe corresponder a la posición `1`, se resta `96`:
+
+```csharp
+int intCharacter = (int)character - 96;
+```
+
+Por ejemplo:
+
+```text
+'a'
+
+97 - 96 = 1
+```
+
+```text
+'b'
+
+98 - 96 = 2
+```
+
+```text
+'c'
+
+99 - 96 = 3
+```
+
+Así se obtiene directamente la posición de cada letra en el alfabeto.
+
+### Conversión a string
+
+El resultado numérico se transforma después en texto:
+
+```csharp
+string stringCharacter = intCharacter.ToString();
+```
+
+Esto permite añadirlo al resultado final.
+
+### Control de los espacios
+
+El resultado debe contener espacios entre los números, pero no debe comenzar con uno.
+
+Para controlar esto se utiliza:
+
+```csharp
+bool firstSpace = false;
+```
+
+La primera posición se añade directamente:
+
+```csharp
+if (!firstSpace)
+{
+    newText += stringCharacter;
+    firstSpace = true;
+}
+```
+
+A partir de la segunda se añade primero un espacio:
+
+```csharp
+else
+{
+    newText += ' ' + stringCharacter;
+}
+```
+
+De esta forma se obtiene:
+
+```text
+20 8 5 19...
+```
+
+y no:
+
+```text
+ 20 8 5 19...
+```
+
+### Aprendizaje
+
+Una parte importante de esta kata fue aprovechar que los caracteres tienen valores numéricos asociados.
+
+Al saber que:
+
+```text
+'a' = 97
+```
+
+se puede obtener la posición en el alfabeto mediante:
+
+```csharp
+(int)character - 96
+```
+
+También fue necesario controlar manualmente la separación mediante espacios para que el resultado no tuviera un espacio adicional al principio.
+
+El algoritmo utilizado puede resumirse como:
+
+```text
+1. Recorrer cada carácter.
+2. Pasarlo a minúscula.
+3. Comprobar si está entre 'a' y 'z'.
+4. Convertirlo a su valor numérico.
+5. Restar 96 para obtener su posición.
+6. Convertir el resultado a string.
+7. Añadirlo al resultado separado por espacios.
+```
+
+### Otra posible aproximación
+
+También podría calcularse la posición relativa respecto a la letra `a` mediante:
+
+```csharp
+character - 'a' + 1
+```
+
+Por ejemplo:
+
+```text
+'b' - 'a' + 1
+
+98 - 97 + 1
+
+= 2
+```
+
+En esta solución mantengo `-96` porque fue la forma utilizada originalmente para deducir el algoritmo.
+
+---
+
 Esta sección irá creciendo a medida que complete nuevas katas y aprenda nuevas herramientas del lenguaje.
 
 ---

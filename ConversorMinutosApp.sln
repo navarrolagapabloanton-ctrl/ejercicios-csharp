@@ -91,6 +91,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "exes-ands-ohs", "exes-ands-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "equals-sides-of-an-array", "equals-sides-of-an-array\equals-sides-of-an-array.csproj", "{B4080A26-994C-46B9-A189-8AA5E3740D00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "replace-with-alphabet-position", "replace-with-alphabet-position\replace-with-alphabet-position.csproj", "{CBB578D9-F237-478C-B562-A1E1A9350AFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -273,6 +275,10 @@ Global
 		{B4080A26-994C-46B9-A189-8AA5E3740D00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4080A26-994C-46B9-A189-8AA5E3740D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4080A26-994C-46B9-A189-8AA5E3740D00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBB578D9-F237-478C-B562-A1E1A9350AFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBB578D9-F237-478C-B562-A1E1A9350AFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBB578D9-F237-478C-B562-A1E1A9350AFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBB578D9-F237-478C-B562-A1E1A9350AFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
