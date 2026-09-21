@@ -4542,6 +4542,310 @@ En esta solución mantengo `-96` porque fue la forma utilizada originalmente par
 
 ---
 
+## Build Tower — 6 kyu
+
+La función recibe un número entero positivo que representa la cantidad de pisos de una torre o pirámide.
+
+Debe devolver un array de strings donde cada elemento representa uno de los pisos.
+
+La torre está formada por asteriscos `*` y espacios.
+
+Por ejemplo, para:
+
+```text
+nFloors = 3
+```
+
+el resultado es:
+
+```text
+  *  
+ *** 
+*****
+```
+
+### Solución
+
+```csharp
+public class Kata
+{
+    public static string[] TowerBuilder(int nFloors)
+    {
+        string[] newString = new string[nFloors];
+        int pyramiBase = nFloors * 2 - 1;
+        int middle = pyramiBase / 2;
+
+        for (int i = 0; i < nFloors; i++)
+        {
+            for (int f = 0; f < pyramiBase; f++)
+            {
+                if (f >= middle - i && f <= middle + i)
+                {
+                    newString[i] += "*";
+                }
+                else
+                {
+                    newString[i] += " ";
+                }
+            }
+        }
+
+        return newString;
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine("\nTorre nº1: ");
+
+        foreach (string asterisks in Kata.TowerBuilder(3))
+        {
+            Console.WriteLine(asterisks);
+        }
+
+        Console.WriteLine("\nTorre nº2: ");
+
+        foreach (string asterisks in Kata.TowerBuilder(6))
+        {
+            Console.WriteLine(asterisks);
+        }
+    }
+}
+```
+
+### Conceptos reforzados
+
+- Creación de arrays de strings.
+- Uso de bucles `for` anidados.
+- Uso de índices.
+- Cálculo de posiciones dentro de un string.
+- Construcción progresiva de strings.
+- Uso de condiciones con `&&`.
+- Cálculo del ancho de una pirámide.
+- Cálculo de su posición central.
+- Separación entre la lógica del método y la visualización mediante `Console.WriteLine()`.
+- Recorrido del resultado mediante `foreach`.
+
+### Calcular el ancho de la torre
+
+La base de la torre debe contener siempre un número impar de posiciones.
+
+Se calcula mediante:
+
+```csharp
+int pyramiBase = nFloors * 2 - 1;
+```
+
+Por ejemplo, para una torre de 3 pisos:
+
+```text
+3 × 2 - 1 = 5
+```
+
+La base mide:
+
+```text
+*****
+```
+
+Para una torre de 6 pisos:
+
+```text
+6 × 2 - 1 = 11
+```
+
+Por tanto, cada string del array tendrá una longitud de 11 caracteres.
+
+### Encontrar el centro
+
+Una vez conocido el ancho, se calcula la posición central:
+
+```csharp
+int middle = pyramiBase / 2;
+```
+
+Para una base de longitud 5:
+
+```text
+Índices:
+
+0 1 2 3 4
+    ↑
+  centro
+```
+
+Por tanto:
+
+```text
+middle = 2
+```
+
+### Construcción de cada piso
+
+El primer `for` controla el piso que se está construyendo:
+
+```csharp
+for (int i = 0; i < nFloors; i++)
+```
+
+El segundo recorre todas las posiciones de ese piso:
+
+```csharp
+for (int f = 0; f < pyramiBase; f++)
+```
+
+Después se comprueba si la posición actual pertenece a la zona que debe contener asteriscos:
+
+```csharp
+if (f >= middle - i && f <= middle + i)
+```
+
+Si pertenece:
+
+```csharp
+newString[i] += "*";
+```
+
+En caso contrario:
+
+```csharp
+newString[i] += " ";
+```
+
+### Ejemplo con 3 pisos
+
+La base mide:
+
+```text
+3 × 2 - 1 = 5
+```
+
+y el centro se encuentra en:
+
+```text
+5 / 2 = 2
+```
+
+#### Piso 0
+
+```text
+middle - i = 2
+middle + i = 2
+```
+
+Solo la posición `2` contiene un asterisco:
+
+```text
+  *  
+```
+
+#### Piso 1
+
+```text
+middle - i = 1
+middle + i = 3
+```
+
+Las posiciones `1`, `2` y `3` contienen asteriscos:
+
+```text
+ *** 
+```
+
+#### Piso 2
+
+```text
+middle - i = 0
+middle + i = 4
+```
+
+Todas las posiciones contienen asteriscos:
+
+```text
+*****
+```
+
+### Mostrar la torre
+
+El método `TowerBuilder()` únicamente construye y devuelve el array:
+
+```csharp
+return newString;
+```
+
+Después, desde `Main`, se recorren sus elementos:
+
+```csharp
+foreach (string asterisks in Kata.TowerBuilder(3))
+{
+    Console.WriteLine(asterisks);
+}
+```
+
+De esta forma se separa la lógica de creación de la torre de su visualización en consola.
+
+### Aprendizaje
+
+La solución se construyó pensando la torre como una serie de posiciones.
+
+Primero se calcula:
+
+```text
+1. Cuánto mide la base.
+2. Dónde está el centro.
+3. Qué piso se está construyendo.
+4. Qué posiciones de ese piso deben contener asteriscos.
+5. Qué posiciones deben contener espacios.
+```
+
+La condición:
+
+```csharp
+f >= middle - i && f <= middle + i
+```
+
+permite ampliar la zona de asteriscos una posición hacia cada lado conforme aumenta el número de piso.
+
+### Otra posible aproximación
+
+C# permite crear un string repitiendo un carácter mediante:
+
+```csharp
+new string(char, cantidad)
+```
+
+Por ejemplo:
+
+```csharp
+new string('*', 5)
+```
+
+produce:
+
+```text
+*****
+```
+
+y:
+
+```csharp
+new string(' ', 3)
+```
+
+produce tres espacios.
+
+Utilizando esta posibilidad, cada piso podría construirse calculando directamente la cantidad de espacios y asteriscos.
+
+La solución principal mantiene los bucles anidados porque permite ver de forma explícita cómo se calcula cada posición de la pirámide.
+
+---
+
 Esta sección irá creciendo a medida que complete nuevas katas y aprenda nuevas herramientas del lenguaje.
 
 ---
