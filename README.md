@@ -4846,6 +4846,356 @@ La solución principal mantiene los bucles anidados porque permite ver de forma 
 
 ---
 
+## Count the Smiley Faces! — 6 kyu
+
+La función recibe un array de strings y debe devolver cuántos de ellos representan emoticonos sonrientes válidos.
+
+Un emoticono válido debe cumplir estas reglas:
+
+- Los ojos deben ser `:` o `;`.
+- La nariz es opcional.
+- Si existe nariz, debe ser `-` o `~`.
+- La boca debe ser `)` o `D`.
+- No se permiten caracteres adicionales.
+
+Ejemplos válidos:
+
+```text
+:)
+:D
+;-D
+:~)
+```
+
+Ejemplos inválidos:
+
+```text
+;(
+:>
+:}
+:]
+```
+
+### Solución
+
+```csharp
+public static class Kata
+{
+    public static int CountSmileys(string[] smileys)
+    {
+        int countSmileys = 0;
+        bool hasEyes = false;
+        bool hasNose = false;
+        bool hasMouth = false;
+
+        for (int i = 0; i < smileys.Length; i++)
+        {
+            hasEyes = false;
+            hasNose = false;
+            hasMouth = false;
+
+            for (int f = 0; f < smileys[i].Length; f++)
+            {
+                if (f == 0)
+                {
+                    if (smileys[i][f] == ':' || smileys[i][f] == ';')
+                    {
+                        hasEyes = true;
+                    }
+                }
+                else if (f == 1)
+                {
+                    if (smileys[i][f] == '-' || smileys[i][f] == '~')
+                    {
+                        hasNose = true;
+                    }
+                    else if (smileys[i][f] == ')' || smileys[i][f] == 'D')
+                    {
+                        hasNose = true;
+                        hasMouth = true;
+                    }
+                }
+                else if (f == 2)
+                {
+                    if (smileys[i][f] == ')' || smileys[i][f] == 'D')
+                    {
+                        hasMouth = true;
+                    }
+                }
+
+                if (hasEyes && hasNose && hasMouth)
+                {
+                    countSmileys++;
+                }
+            }
+        }
+
+        return countSmileys;
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public static class Program
+{
+    public static void Main(string[] args)
+    {
+        string[] array = { ":)", ";(", ";}", ":-D" };
+        string[] array2 = { ";D", ":-(", ":-)", ";~)" };
+        string[] array3 = { ";]", ":[", ";*", ":$", ";-D" };
+
+        Console.WriteLine(Kata.CountSmileys(array));
+        Console.WriteLine(Kata.CountSmileys(array2));
+        Console.WriteLine(Kata.CountSmileys(array3));
+    }
+}
+```
+
+### Conceptos reforzados
+
+- Recorrido de arrays mediante `for`.
+- Recorrido de strings mediante índices.
+- Uso de bucles anidados.
+- Uso de variables booleanas para representar estados.
+- Validación de caracteres según su posición.
+- Uso de operadores lógicos `||` y `&&`.
+- Reinicio de variables en cada iteración.
+- Construcción de un algoritmo a partir de reglas concretas.
+
+### Funcionamiento
+
+El primer `for` recorre cada emoticono del array:
+
+```csharp
+for (int i = 0; i < smileys.Length; i++)
+```
+
+Antes de analizar cada uno se reinician los estados:
+
+```csharp
+hasEyes = false;
+hasNose = false;
+hasMouth = false;
+```
+
+Después se recorre cada carácter del emoticono:
+
+```csharp
+for (int f = 0; f < smileys[i].Length; f++)
+```
+
+### Posición 0: ojos
+
+La primera posición debe contener:
+
+```text
+:
+```
+
+o:
+
+```text
+;
+```
+
+Por eso se comprueba:
+
+```csharp
+if (smileys[i][f] == ':' || smileys[i][f] == ';')
+{
+    hasEyes = true;
+}
+```
+
+### Posición 1: nariz o boca
+
+Si el emoticono tiene nariz, esta debe ser:
+
+```text
+-
+~
+```
+
+Por eso:
+
+```csharp
+if (smileys[i][f] == '-' || smileys[i][f] == '~')
+{
+    hasNose = true;
+}
+```
+
+Pero la nariz es opcional.
+
+Por ejemplo:
+
+```text
+:)
+```
+
+tiene la boca directamente en la posición `1`.
+
+En ese caso:
+
+```csharp
+else if (smileys[i][f] == ')' || smileys[i][f] == 'D')
+{
+    hasNose = true;
+    hasMouth = true;
+}
+```
+
+`hasNose` se marca como `true` aunque no exista una nariz real, porque dentro de este algoritmo representa también que **la condición de la nariz es válida al ser opcional**.
+
+### Posición 2: boca
+
+Si existe una tercera posición, debe contener:
+
+```text
+)
+D
+```
+
+Por eso:
+
+```csharp
+if (smileys[i][f] == ')' || smileys[i][f] == 'D')
+{
+    hasMouth = true;
+}
+```
+
+### Contar un emoticono válido
+
+Cuando se cumplen las tres condiciones:
+
+```csharp
+if (hasEyes && hasNose && hasMouth)
+{
+    countSmileys++;
+}
+```
+
+se incrementa el contador.
+
+### Ejemplos
+
+Para:
+
+```text
+":)"
+```
+
+el recorrido sería:
+
+```text
+':' → ojos válidos
+')' → boca válida y nariz opcional válida
+```
+
+Resultado:
+
+```text
+válido
+```
+
+Para:
+
+```text
+":-D"
+```
+
+el recorrido sería:
+
+```text
+':' → ojos válidos
+'-' → nariz válida
+'D' → boca válida
+```
+
+Resultado:
+
+```text
+válido
+```
+
+Para:
+
+```text
+";("
+```
+
+se detectan ojos válidos, pero:
+
+```text
+'('
+```
+
+no es una boca permitida.
+
+Resultado:
+
+```text
+inválido
+```
+
+### Aprendizaje
+
+La solución se construyó siguiendo literalmente las reglas del enunciado:
+
+```text
+1. Validar los ojos.
+2. Comprobar si existe una nariz válida.
+3. Validar la boca.
+4. Contar el emoticono si todo es correcto.
+```
+
+Como cada parte del emoticono aparece siempre en el mismo orden, se utilizaron las posiciones del string para decidir qué carácter debía aparecer en cada momento.
+
+También fue necesario tener en cuenta que la nariz es opcional.
+
+Por ello, un emoticono de dos caracteres como:
+
+```text
+:)
+```
+
+también se considera válido aunque no tenga nariz.
+
+### Otra posible aproximación
+
+Como los emoticonos válidos solo pueden tener longitud `2` o `3`, también se podría comprobar directamente:
+
+```text
+posición 0 → ojos
+posición final → boca
+posición 1 → nariz solo si la longitud es 3
+```
+
+Por ejemplo, C# permite acceder al último carácter mediante:
+
+```csharp
+smiley[^1]
+```
+
+donde:
+
+```text
+^1
+```
+
+significa:
+
+```text
+primer elemento empezando desde el final
+```
+
+La solución principal mantiene el recorrido carácter por carácter porque fue el enfoque utilizado para traducir directamente las reglas del ejercicio a un algoritmo.
+
+---
+
 Esta sección irá creciendo a medida que complete nuevas katas y aprenda nuevas herramientas del lenguaje.
 
 ---
