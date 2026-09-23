@@ -97,6 +97,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "build-tower", "build-tower\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "count-the-smiley-faces", "count-the-smiley-faces\count-the-smiley-faces.csproj", "{7642FCF3-98F5-433D-BEB7-29BB679546BF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "take-a-ten-minutes-walk", "take-a-ten-minutes-walk\take-a-ten-minutes-walk.csproj", "{6EE1E9C9-C407-4449-B605-58F04558C128}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -291,6 +293,10 @@ Global
 		{7642FCF3-98F5-433D-BEB7-29BB679546BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7642FCF3-98F5-433D-BEB7-29BB679546BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7642FCF3-98F5-433D-BEB7-29BB679546BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EE1E9C9-C407-4449-B605-58F04558C128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EE1E9C9-C407-4449-B605-58F04558C128}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EE1E9C9-C407-4449-B605-58F04558C128}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EE1E9C9-C407-4449-B605-58F04558C128}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

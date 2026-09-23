@@ -5196,6 +5196,295 @@ La solución principal mantiene el recorrido carácter por carácter porque fue 
 
 ---
 
+## Take a Ten Minute Walk — 6 kyu
+
+La función recibe un array de strings que representa las direcciones de un paseo.
+
+Cada elemento puede ser:
+
+```text
+"n" → norte
+"s" → sur
+"e" → este
+"w" → oeste
+```
+
+Cada movimiento tarda exactamente un minuto.
+
+El paseo solo será válido si cumple dos condiciones:
+
+1. Tiene exactamente 10 movimientos, es decir, dura 10 minutos.
+2. Después de realizar todos los movimientos se vuelve al punto de partida.
+
+### Solución
+
+```csharp
+public class Kata
+{
+    public static bool IsValidWalk(string[] walk)
+    {
+        int nCounter = 0;
+        int sCounter = 0;
+        int eCounter = 0;
+        int wCounter = 0;
+
+        if (walk.Length != 10)
+        {
+            return false;
+        }
+        else
+        {
+            foreach (string direction in walk)
+            {
+                if (direction == "n")
+                {
+                    nCounter++;
+                }
+                else if (direction == "s")
+                {
+                    sCounter++;
+                }
+                else if (direction == "e")
+                {
+                    eCounter++;
+                }
+                else if (direction == "w")
+                {
+                    wCounter++;
+                }
+            }
+        }
+
+        return (nCounter - sCounter == 0
+               && eCounter - wCounter == 0);
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        string[] array1 =
+        {
+            "n", "s", "n", "s", "n",
+            "s", "n", "s", "n", "s"
+        };
+
+        string[] array2 =
+        {
+            "w", "e", "w", "e", "w", "e",
+            "w", "e", "w", "e", "w", "e"
+        };
+
+        string[] array3 =
+        {
+            "w"
+        };
+
+        string[] array4 =
+        {
+            "n", "n", "n", "s", "n",
+            "s", "n", "s", "n", "s"
+        };
+
+        Console.WriteLine(Kata.IsValidWalk(array1));
+        Console.WriteLine(Kata.IsValidWalk(array2));
+        Console.WriteLine(Kata.IsValidWalk(array3));
+        Console.WriteLine(Kata.IsValidWalk(array4));
+    }
+}
+```
+
+### Conceptos reforzados
+
+- Recorrido de arrays mediante `foreach`.
+- Uso de contadores.
+- Uso de `Length`.
+- Condicionales `if / else if`.
+- Operadores lógicos `&&`.
+- Comparación de movimientos opuestos.
+- Devolución directa de expresiones booleanas.
+- Finalización anticipada de un método mediante `return`.
+
+### Comprobar la duración
+
+Como cada dirección representa un minuto de paseo, el array debe contener exactamente 10 elementos:
+
+```csharp
+if (walk.Length != 10)
+{
+    return false;
+}
+```
+
+Si el número de movimientos es distinto de 10, no es necesario continuar comprobando el recorrido.
+
+Por ejemplo:
+
+```text
+["w"]
+```
+
+solo representa un minuto, por lo que devuelve:
+
+```text
+false
+```
+
+### Contar las direcciones
+
+Si el paseo dura exactamente 10 minutos, se recorren todas las direcciones:
+
+```csharp
+foreach (string direction in walk)
+```
+
+Se utiliza un contador diferente para cada dirección:
+
+```csharp
+int nCounter = 0;
+int sCounter = 0;
+int eCounter = 0;
+int wCounter = 0;
+```
+
+Por ejemplo:
+
+```csharp
+if (direction == "n")
+{
+    nCounter++;
+}
+```
+
+incrementa el número de movimientos realizados hacia el norte.
+
+### Volver al punto de partida
+
+Para terminar exactamente en el mismo lugar, todos los movimientos hacia el norte deben compensarse con movimientos hacia el sur.
+
+Por tanto:
+
+```csharp
+nCounter - sCounter == 0
+```
+
+Del mismo modo, los movimientos hacia el este deben compensarse con los movimientos hacia el oeste:
+
+```csharp
+eCounter - wCounter == 0
+```
+
+Ambas condiciones deben cumplirse:
+
+```csharp
+return (nCounter - sCounter == 0
+       && eCounter - wCounter == 0);
+```
+
+### Ejemplo válido
+
+```text
+["n", "s", "n", "s", "n", "s", "n", "s", "n", "s"]
+```
+
+Tiene:
+
+```text
+10 movimientos
+```
+
+y:
+
+```text
+Norte = 5
+Sur   = 5
+
+Este = 0
+Oeste = 0
+```
+
+Por tanto:
+
+```text
+5 - 5 = 0
+0 - 0 = 0
+```
+
+Resultado:
+
+```text
+true
+```
+
+### Ejemplo inválido por duración
+
+```text
+["w"]
+```
+
+Solo contiene un movimiento:
+
+```text
+walk.Length = 1
+```
+
+Resultado:
+
+```text
+false
+```
+
+### Ejemplo inválido por posición final
+
+```text
+["n", "n", "n", "s", "n", "s", "n", "s", "n", "s"]
+```
+
+Aunque contiene exactamente 10 movimientos, hay más movimientos hacia el norte que hacia el sur.
+
+Por tanto, el paseo no termina en el punto inicial.
+
+Resultado:
+
+```text
+false
+```
+
+### Aprendizaje
+
+El problema puede dividirse en dos comprobaciones independientes:
+
+```text
+1. ¿El paseo dura exactamente 10 minutos?
+2. ¿El desplazamiento final es igual a 0?
+```
+
+La primera condición se comprueba mediante:
+
+```csharp
+walk.Length == 10
+```
+
+Para la segunda se cuentan por separado las cuatro direcciones.
+
+Las direcciones opuestas deben compensarse:
+
+```text
+norte ↔ sur
+este  ↔ oeste
+```
+
+Por ello, si ambas diferencias son `0`, significa que se ha vuelto al mismo punto desde el que comenzó el paseo.
+
+La solución utiliza cuatro contadores porque permite representar de forma directa las cuatro direcciones indicadas por el enunciado.
+
+---
+
 Esta sección irá creciendo a medida que complete nuevas katas y aprenda nuevas herramientas del lenguaje.
 
 ---
