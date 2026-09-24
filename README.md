@@ -5485,6 +5485,264 @@ La solución utiliza cuatro contadores porque permite representar de forma direc
 
 ---
 
+## Bouncing Balls — 6 kyu
+
+La función simula una pelota que se deja caer desde una altura determinada.
+
+Después de cada impacto contra el suelo, la pelota rebota alcanzando una fracción de la altura anterior.
+
+Una persona observa la pelota desde una ventana situada a cierta altura y hay que calcular cuántas veces ve pasar la pelota por delante de ella.
+
+La pelota puede pasar por la ventana:
+
+- Una vez durante la caída inicial.
+- Una vez al subir después de cada rebote suficientemente alto.
+- Una vez al volver a bajar después de ese mismo rebote.
+
+### Condiciones
+
+Los datos solo son válidos si:
+
+```text
+h > 0
+0 < bounce < 1
+window < h
+```
+
+Si alguna de estas condiciones no se cumple, la función devuelve:
+
+```text
+-1
+```
+
+### Solución
+
+```csharp
+public class BouncingBall
+{
+    public static int bouncingBall(double h, double bounce, double window)
+    {
+        if (h <= 0 || bounce >= 1 || bounce <= 0 || h <= window)
+        {
+            return -1;
+        }
+
+        double ballHeight = h * bounce;
+        int bouncesCounter = 1;
+
+        while (ballHeight > window)
+        {
+            bouncesCounter++;
+            ballHeight *= bounce;
+            bouncesCounter++;
+        }
+
+        return bouncesCounter;
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine(
+            BouncingBall.bouncingBall(3.0, 0.66, 1.5)
+        );
+
+        Console.WriteLine(
+            BouncingBall.bouncingBall(30.0, 0.66, 1.5)
+        );
+    }
+}
+```
+
+### Funcionamiento
+
+Primero se comprueban las condiciones de entrada:
+
+```csharp
+if (h <= 0 || bounce >= 1 || bounce <= 0 || h <= window)
+{
+    return -1;
+}
+```
+
+Si alguno de los valores no es válido, el método termina inmediatamente.
+
+### Primera vez que se ve la pelota
+
+La caída inicial siempre cuenta una vez:
+
+```csharp
+int bouncesCounter = 1;
+```
+
+La persona ve la pelota pasar por delante de la ventana mientras cae por primera vez.
+
+### Calcular la altura del primer rebote
+
+La altura después del primer bote se calcula mediante:
+
+```csharp
+double ballHeight = h * bounce;
+```
+
+Por ejemplo:
+
+```text
+h = 3
+bounce = 0,66
+```
+
+produce:
+
+```text
+3 × 0,66 = 1,98
+```
+
+Si la ventana está situada a:
+
+```text
+1,5 metros
+```
+
+el rebote supera la ventana.
+
+### Contar los rebotes visibles
+
+Mientras la altura alcanzada después del rebote sea superior a la ventana:
+
+```csharp
+while (ballHeight > window)
+```
+
+la pelota se verá dos veces.
+
+Primero al subir:
+
+```csharp
+bouncesCounter++;
+```
+
+Después se calcula la altura del siguiente rebote:
+
+```csharp
+ballHeight *= bounce;
+```
+
+Y se cuenta también el paso al bajar:
+
+```csharp
+bouncesCounter++;
+```
+
+La separación de los dos incrementos permite representar directamente los dos momentos en los que la pelota pasa por delante de la ventana.
+
+### Ejemplo
+
+Para:
+
+```text
+h = 3
+bounce = 0,66
+window = 1,5
+```
+
+la caída inicial cuenta:
+
+```text
+1 vez
+```
+
+El primer rebote alcanza:
+
+```text
+3 × 0,66 = 1,98
+```
+
+Como:
+
+```text
+1,98 > 1,5
+```
+
+la pelota pasa:
+
+```text
+1 vez al subir
+1 vez al bajar
+```
+
+El siguiente rebote alcanza aproximadamente:
+
+```text
+1,98 × 0,66 = 1,31
+```
+
+Como:
+
+```text
+1,31 < 1,5
+```
+
+ya no vuelve a pasar por delante de la ventana.
+
+Resultado:
+
+```text
+3
+```
+
+### Conceptos reforzados
+
+- Uso de valores `double`.
+- Uso de bucles `while`.
+- Uso de acumuladores.
+- Validación de parámetros.
+- Uso de operadores lógicos `||`.
+- Finalización anticipada de métodos mediante `return`.
+- Multiplicaciones sucesivas.
+- Modelado de un problema físico mediante programación.
+- Diferencia entre caída inicial y rebotes posteriores.
+
+### Aprendizaje
+
+Una de las partes importantes de esta kata fue comprender que cada rebote suficientemente alto puede hacer que la pelota sea visible dos veces:
+
+```text
+subida → +1
+bajada → +1
+```
+
+La caída inicial, en cambio, solo ocurre una vez.
+
+Por ello el contador comienza en:
+
+```csharp
+int bouncesCounter = 1;
+```
+
+y después cada rebote visible añade dos nuevas observaciones.
+
+El algoritmo puede resumirse como:
+
+```text
+1. Validar los valores de entrada.
+2. Contar la caída inicial.
+3. Calcular la altura del primer rebote.
+4. Mientras el rebote supere la ventana:
+   - contar la subida;
+   - calcular la siguiente altura;
+   - contar la bajada.
+5. Devolver el número total de veces que se ha visto la pelota.
+```
+
+---
+
 Esta sección irá creciendo a medida que complete nuevas katas y aprenda nuevas herramientas del lenguaje.
 
 ---

@@ -99,6 +99,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "count-the-smiley-faces", "c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "take-a-ten-minutes-walk", "take-a-ten-minutes-walk\take-a-ten-minutes-walk.csproj", "{6EE1E9C9-C407-4449-B605-58F04558C128}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bouncing-balls", "bouncing-balls\bouncing-balls.csproj", "{58390EFB-02A8-4144-8D96-3FFD791F1353}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -297,6 +299,10 @@ Global
 		{6EE1E9C9-C407-4449-B605-58F04558C128}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EE1E9C9-C407-4449-B605-58F04558C128}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EE1E9C9-C407-4449-B605-58F04558C128}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58390EFB-02A8-4144-8D96-3FFD791F1353}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58390EFB-02A8-4144-8D96-3FFD791F1353}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58390EFB-02A8-4144-8D96-3FFD791F1353}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58390EFB-02A8-4144-8D96-3FFD791F1353}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
