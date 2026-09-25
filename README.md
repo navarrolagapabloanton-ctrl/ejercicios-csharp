@@ -5743,6 +5743,480 @@ El algoritmo puede resumirse como:
 
 ---
 
+## Take a Number And Sum Its Digits Raised To The Consecutive Powers And ....¡Eureka!! — 6 kyu
+
+La función recibe dos números que representan los límites de un rango y debe devolver todos los números que cumplen una condición especial.
+
+Cada dígito del número debe elevarse a una potencia consecutiva empezando por `1`.
+
+Por ejemplo:
+
+```text
+89 = 8¹ + 9²
+
+8¹ = 8
+9² = 81
+
+8 + 81 = 89
+```
+
+Por tanto, `89` cumple la condición.
+
+Otro ejemplo es:
+
+```text
+135 = 1¹ + 3² + 5³
+
+1 + 9 + 125 = 135
+```
+
+La función debe devolver todos los números que cumplan esta propiedad dentro del rango indicado.
+
+Si no encuentra ninguno, debe devolver un array vacío.
+
+### Solución
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public class SumDigPower
+{
+    public static long[] SumDigPow(long a, long b)
+    {
+        long min;
+        long max;
+
+        if (a < b)
+        {
+            min = a;
+            max = b;
+        }
+        else if (a > b)
+        {
+            max = a;
+            min = b;
+        }
+        else
+        {
+            min = a;
+            max = b;
+        }
+
+        List<long> result = new List<long>();
+
+        for (long i = min; i <= max; i++)
+        {
+            string stringNumber = i.ToString();
+       
+            long digit = 0;
+            long digitPowSumResult = 0;
+
+            for (int f = 0; f < stringNumber.Length; f++)
+            {
+                digit = stringNumber[f] - '0';
+                digit = (long)Math.Pow(digit, f + 1);
+
+                digitPowSumResult += digit;
+            }
+
+            if (i == digitPowSumResult)
+            {
+                result.Add(i);
+            }
+        }
+
+        return result.ToArray();
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine("\nEjemplo 1: \n");
+
+        foreach(long digit in SumDigPower.SumDigPow(1, 10))
+        {
+            Console.WriteLine(digit);
+        }
+
+        Console.WriteLine("\nEjemplo 2: \n");
+
+        foreach (long digit in SumDigPower.SumDigPow(1, 100))
+        {
+            Console.WriteLine(digit);
+        }
+
+        Console.WriteLine("\nEjemplo 3: \n");
+
+        foreach (long digit in SumDigPower.SumDigPow(10, 100))
+        {
+            Console.WriteLine(digit);
+        }
+
+        Console.WriteLine("\nEjemplo 4: \n");
+
+        foreach (long digit in SumDigPower.SumDigPow(90, 100))
+        {
+            Console.WriteLine(digit);
+        }
+
+        Console.WriteLine("\nEjemplo 5: \n");
+
+        foreach (long digit in SumDigPower.SumDigPow(90, 150))
+        {
+            Console.WriteLine(digit);
+        }
+
+        Console.WriteLine("\nEjemplo 6: \n");
+
+        foreach (long digit in SumDigPower.SumDigPow(50, 150))
+        {
+            Console.WriteLine(digit);
+        }
+
+        Console.WriteLine("\nEjemplo 7: \n");
+
+        foreach (long digit in SumDigPower.SumDigPow(10, 150))
+        {
+            Console.WriteLine(digit);
+        }
+    }
+}
+```
+
+### Funcionamiento
+
+Primero se determinan los límites inferior y superior del rango:
+
+```csharp
+long min;
+long max;
+```
+
+Se comprueba qué parámetro es menor:
+
+```csharp
+if (a < b)
+{
+    min = a;
+    max = b;
+}
+else if (a > b)
+{
+    max = a;
+    min = b;
+}
+else
+{
+    min = a;
+    max = b;
+}
+```
+
+Esto permite trabajar siempre desde el número menor hasta el mayor.
+
+### Guardar los resultados
+
+Como no se sabe de antemano cuántos números cumplirán la condición, se utiliza una lista:
+
+```csharp
+List<long> result = new List<long>();
+```
+
+Cada número válido encontrado se añadirá mediante:
+
+```csharp
+result.Add(i);
+```
+
+### Recorrer el rango
+
+Se recorren todos los números desde `min` hasta `max`, ambos incluidos:
+
+```csharp
+for (long i = min; i <= max; i++)
+```
+
+La variable `i` representa el número que se está comprobando en cada iteración.
+
+### Convertir el número en un string
+
+Para poder acceder fácilmente a cada uno de sus dígitos, el número se transforma en texto:
+
+```csharp
+string stringNumber = i.ToString();
+```
+
+Por ejemplo:
+
+```text
+135
+```
+
+se transforma en:
+
+```text
+"135"
+```
+
+Esto permite recorrer sus caracteres mediante índices:
+
+```csharp
+stringNumber[0] → '1'
+stringNumber[1] → '3'
+stringNumber[2] → '5'
+```
+
+### Convertir un `char` en su valor numérico
+
+Al acceder a un string mediante un índice se obtiene un `char`.
+
+Por ejemplo:
+
+```csharp
+stringNumber[0]
+```
+
+devuelve:
+
+```text
+'1'
+```
+
+No devuelve directamente el número `1`.
+
+Si se realiza una conversión directa:
+
+```csharp
+(long)stringNumber[f]
+```
+
+se obtiene el código numérico del carácter.
+
+Por ejemplo:
+
+```text
+'1' → 49
+```
+
+Para obtener el valor real del dígito se utiliza:
+
+```csharp
+digit = stringNumber[f] - '0';
+```
+
+Esto funciona porque los caracteres numéricos están ordenados consecutivamente:
+
+```text
+'0' → 48
+'1' → 49
+'2' → 50
+...
+```
+
+Por tanto:
+
+```text
+'1' - '0'
+49  - 48
+= 1
+```
+
+### Elevar cada dígito a su potencia
+
+El índice del bucle empieza en `0`:
+
+```csharp
+for (int f = 0; f < stringNumber.Length; f++)
+```
+
+Pero las potencias deben comenzar en `1`.
+
+Por eso se utiliza:
+
+```csharp
+f + 1
+```
+
+en:
+
+```csharp
+digit = (long)Math.Pow(digit, f + 1);
+```
+
+Por ejemplo, para `135`:
+
+```text
+f = 0 → 1¹
+f = 1 → 3²
+f = 2 → 5³
+```
+
+### Sumar las potencias
+
+Cada resultado se acumula en:
+
+```csharp
+long digitPowSumResult = 0;
+```
+
+mediante:
+
+```csharp
+digitPowSumResult += digit;
+```
+
+Para `135`:
+
+```text
+1¹ = 1
+3² = 9
+5³ = 125
+
+1 + 9 + 125 = 135
+```
+
+### Comprobar el resultado
+
+Una vez recorridos todos los dígitos, se compara la suma obtenida con el número original:
+
+```csharp
+if (i == digitPowSumResult)
+{
+    result.Add(i);
+}
+```
+
+Si son iguales, el número cumple la condición y se añade a la lista.
+
+### Devolver el resultado
+
+El método debe devolver un array de `long`, mientras que durante el proceso se ha utilizado una `List<long>`.
+
+Por eso al final se convierte mediante:
+
+```csharp
+return result.ToArray();
+```
+
+Si no se ha encontrado ningún número válido, la lista estará vacía y se devolverá automáticamente un array vacío.
+
+### Ejemplos
+
+Para:
+
+```csharp
+SumDigPow(1, 100)
+```
+
+el resultado contiene:
+
+```text
+1
+2
+3
+4
+5
+6
+7
+8
+9
+89
+```
+
+Para:
+
+```csharp
+SumDigPow(90, 100)
+```
+
+no existe ningún número que cumpla la condición, por lo que se devuelve:
+
+```text
+[]
+```
+
+Para:
+
+```csharp
+SumDigPow(90, 150)
+```
+
+se encuentra:
+
+```text
+135
+```
+
+porque:
+
+```text
+135 = 1¹ + 3² + 5³
+```
+
+### Conceptos reforzados
+
+- Bucles `for` anidados.
+- Recorrido de rangos numéricos.
+- Conversión de números a `string`.
+- Acceso a caracteres mediante índices.
+- Diferencia entre `char` y su valor numérico.
+- Conversión de un dígito mediante `'0'`.
+- Uso de `Math.Pow`.
+- Uso de `List<long>`.
+- Uso de `Add()`.
+- Conversión de una lista mediante `ToArray()`.
+- Uso de acumuladores.
+- Uso del índice de un bucle para generar potencias consecutivas.
+- Descomposición de un problema matemático en pasos más pequeños.
+
+### Aprendizaje
+
+La parte principal del algoritmo consiste en dos recorridos:
+
+```text
+Primer bucle  → recorrer todos los números del rango.
+Segundo bucle → recorrer todos los dígitos de cada número.
+```
+
+Para cada número:
+
+```text
+1. Se convierte a string.
+2. Se obtiene cada dígito.
+3. Se convierte el char en su valor numérico.
+4. Se eleva a una potencia según su posición.
+5. Se suman los resultados.
+6. Se compara la suma con el número original.
+7. Si son iguales, se guarda el número.
+```
+
+Uno de los aprendizajes importantes fue comprender que:
+
+```csharp
+stringNumber[f]
+```
+
+devuelve un `char`, y que una conversión directa del carácter devuelve su código numérico.
+
+Por ello:
+
+```csharp
+stringNumber[f] - '0'
+```
+
+permite obtener correctamente el valor del dígito.
+
+También se utilizó el depurador de Visual Studio para observar paso a paso cómo iban cambiando las variables durante la ejecución, evitando depender únicamente de `Console.WriteLine` para comprobar el funcionamiento interno del algoritmo.
+
+---
+
 Esta sección irá creciendo a medida que complete nuevas katas y aprenda nuevas herramientas del lenguaje.
 
 ---
