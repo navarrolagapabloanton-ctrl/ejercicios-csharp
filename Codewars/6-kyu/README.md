@@ -16,6 +16,7 @@ Ejercicios de nivel **6 kyu** realizados en C#. En estas katas aparecen problema
 | Bouncing Balls | `while`, `double`, acumuladores |
 | Sum Dig Power | `Math.Pow`, `List<long>`, conversión de tipos |
 | Count characters in your string | `Dictionary<char, int>`, `ContainsKey()`, `Add()`, `KeyValuePair`, contadores |
+| Find the odd int | LINQ, `Count()`, lambdas, `foreach`, módulo `%` y conteo de apariciones |
 
 ---
 
@@ -2629,6 +2630,328 @@ el proceso sería:
 ```
 
 La solución principal se mantiene porque representa el algoritmo utilizado originalmente para resolver el ejercicio antes de conocer esta simplificación.
+
+---
+
+## Find the odd int — 6 kyu
+
+La función recibe un array de enteros y debe devolver el número que aparece un número impar de veces.
+
+Por ejemplo:
+
+```text
+[1, 1, 2]
+```
+
+El `1` aparece dos veces, mientras que el `2` aparece una vez.
+
+Por tanto, el resultado es:
+
+```text
+2
+```
+
+### Solución
+
+```csharp
+class Kata
+{
+    public static int find_it(int[] seq)
+    {
+        foreach(int number in seq)
+        {
+            if (seq.Count(n => n == number) % 2 != 0)
+            {
+                return number;
+            }
+        }
+
+        return -1;
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+class Program
+{
+    public static void Main(string[] args)
+    {
+        int[] array1 = { 7 };
+        int[] array2 = { 0 };
+        int[] array3 = { 1, 1, 2 };
+        int[] array4 = { 0, 1, 0, 1, 0 };
+        int[] array5 = { 1, 2, 2, 3, 3, 3, 4, 3, 3, 3, 2, 2, 1 };
+        int[] array6 = { 20, 1, -1, 2, -2, 3, 3,
+            5, 5, 1, 2, 4, 20, 4, -1, -2, 5 };
+
+        Console.WriteLine(Kata.find_it(array1));
+        Console.WriteLine(Kata.find_it(array2));
+        Console.WriteLine(Kata.find_it(array3));
+        Console.WriteLine(Kata.find_it(array4));
+        Console.WriteLine(Kata.find_it(array5));
+        Console.WriteLine(Kata.find_it(array6));
+    }
+}
+```
+
+### Conceptos reforzados
+
+- Recorrido de arrays mediante `foreach`.
+- Uso de LINQ.
+- Uso de `Count()` con una condición.
+- Introducción a expresiones lambda.
+- Uso de `%` para comprobar si un número es impar.
+- Uso de `return` para terminar el método al encontrar el resultado.
+- Comparación entre una solución manual con bucles y una solución más compacta con LINQ.
+
+### Funcionamiento
+
+El método recorre todos los números del array:
+
+```csharp
+foreach (int number in seq)
+```
+
+La variable:
+
+```csharp
+number
+```
+
+representa el número actual que se está comprobando.
+
+Para cada número se calcula cuántas veces aparece dentro del array mediante:
+
+```csharp
+seq.Count(n => n == number)
+```
+
+### Uso de `Count()`
+
+`Count()` puede recibir una condición y contar únicamente los elementos que la cumplen.
+
+La estructura general es:
+
+```csharp
+coleccion.Count(elemento => condicion)
+```
+
+En esta kata:
+
+```csharp
+seq.Count(n => n == number)
+```
+
+significa:
+
+```text
+Recorre los elementos de seq
+y cuenta aquellos donde:
+
+n == number
+```
+
+Por ejemplo, para:
+
+```text
+seq = [1, 1, 2]
+number = 1
+```
+
+la condición se evalúa así:
+
+```text
+n = 1 → 1 == 1 → true
+n = 1 → 1 == 1 → true
+n = 2 → 2 == 1 → false
+```
+
+Por tanto:
+
+```csharp
+seq.Count(n => n == number)
+```
+
+devuelve:
+
+```text
+2
+```
+
+### ¿Qué representa `n`?
+
+La `n` es simplemente un nombre temporal utilizado para representar cada elemento de la colección mientras `Count()` la recorre.
+
+Podría llamarse de cualquier manera:
+
+```csharp
+seq.Count(x => x == number)
+```
+
+o:
+
+```csharp
+seq.Count(element => element == number)
+```
+
+o:
+
+```csharp
+seq.Count(value => value == number)
+```
+
+Todas estas expresiones realizan exactamente la misma operación.
+
+La forma:
+
+```csharp
+n => n == number
+```
+
+es una expresión lambda.
+
+Puede interpretarse como:
+
+```text
+Para cada elemento n,
+comprueba si n es igual a number.
+```
+
+### Comprobar si aparece un número impar de veces
+
+Una vez obtenida la cantidad de apariciones, se utiliza:
+
+```csharp
+% 2 != 0
+```
+
+para comprobar si es impar.
+
+Por ejemplo:
+
+```text
+1 % 2 = 1 → impar
+2 % 2 = 0 → par
+3 % 2 = 1 → impar
+```
+
+Por eso la condición completa es:
+
+```csharp
+if (seq.Count(n => n == number) % 2 != 0)
+```
+
+Si el número aparece una cantidad impar de veces:
+
+```csharp
+return number;
+```
+
+termina inmediatamente el método y devuelve ese valor.
+
+### Ejemplo
+
+Para:
+
+```text
+[0, 1, 0, 1, 0]
+```
+
+el `0` aparece:
+
+```text
+3 veces
+```
+
+y el `1` aparece:
+
+```text
+2 veces
+```
+
+Por tanto:
+
+```text
+0 → impar
+1 → par
+```
+
+Resultado:
+
+```text
+0
+```
+
+### Aprendizaje
+
+La primera idea para resolver esta kata fue utilizar dos bucles:
+
+```text
+1. Seleccionar un número.
+2. Recorrer todo el array.
+3. Contar cuántas veces aparece.
+4. Comprobar si el contador es impar.
+```
+
+Después se investigó si C# ofrecía alguna herramienta para contar directamente los elementos que cumplen una condición.
+
+Esto llevó al uso de:
+
+```csharp
+Count()
+```
+
+junto con una expresión lambda:
+
+```csharp
+n => n == number
+```
+
+De esta forma, una parte del algoritmo que manualmente necesitaría un segundo bucle puede expresarse de forma más compacta mediante LINQ.
+
+La lógica sigue siendo la misma:
+
+```text
+seleccionar número
+→ contar apariciones
+→ comprobar si la cantidad es impar
+→ devolver el número
+```
+
+### Versión manual equivalente
+
+La misma lógica podría escribirse sin LINQ utilizando dos recorridos:
+
+```csharp
+public static int find_it(int[] seq)
+{
+    foreach (int number in seq)
+    {
+        int counter = 0;
+
+        foreach (int otherNumber in seq)
+        {
+            if (otherNumber == number)
+            {
+                counter++;
+            }
+        }
+
+        if (counter % 2 != 0)
+        {
+            return number;
+        }
+    }
+
+    return -1;
+}
+```
+
+Esta versión permite ver explícitamente el recorrido que `Count()` realiza internamente.
+
+La solución principal mantiene LINQ porque permite expresar de forma clara y compacta la misma idea.
 
 ---
 

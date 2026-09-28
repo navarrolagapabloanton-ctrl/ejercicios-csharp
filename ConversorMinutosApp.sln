@@ -105,6 +105,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "take-a-number-and-sum-its-d
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "count-characters-in-your-string", "count-characters-in-your-string\count-characters-in-your-string.csproj", "{E3E9DF79-418E-4731-9F10-C5CBC280B7AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "find-the-odd-int", "find-the-odd-int\find-the-odd-int.csproj", "{6FE6FA38-3F36-4CB2-ABA1-E47970C70553}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -315,6 +317,10 @@ Global
 		{E3E9DF79-418E-4731-9F10-C5CBC280B7AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3E9DF79-418E-4731-9F10-C5CBC280B7AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3E9DF79-418E-4731-9F10-C5CBC280B7AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FE6FA38-3F36-4CB2-ABA1-E47970C70553}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FE6FA38-3F36-4CB2-ABA1-E47970C70553}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FE6FA38-3F36-4CB2-ABA1-E47970C70553}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FE6FA38-3F36-4CB2-ABA1-E47970C70553}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,10 +5,13 @@
 Ejercicios de nivel **8 kyu** realizados durante mi aprendizaje de C#.
 
 ## Katas incluidas
+## Katas incluidas
 
-- Count of positives / sum of negatives
-- Maximum and Minimum Values of a List
-- Are You Playing Banjo?
+| Kata | Conceptos principales |
+|---|---|
+| Count of positives / sum of negatives | Arrays, `null`, `Length`, bucles `for`, contadores, acumuladores y arrays como retorno |
+| Maximum and Minimum Values of a List | Arrays, bucles `for`, máximos y mínimos, comparación y actualización de valores |
+| Are You Playing Banjo? | Strings, `char`, índices, `ToLower()`, operador ternario y validación de entrada |
 
 ---
 

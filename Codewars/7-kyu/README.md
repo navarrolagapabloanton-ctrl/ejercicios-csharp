@@ -6,25 +6,27 @@ Ejercicios de nivel **7 kyu** realizados en C#. Esta sección refleja la progres
 
 ## Katas incluidas
 
-- Validate PIN Code
-- Is this a Triangle?
-- Vowel Count
-- Find the Next Perfect Square!
-- Sum of Odd Numbers
-- Two to One
-- Mumbling
-- Jaden Case
-- Categorize New Member
-- Reverse Words
-- You're a Square!
-- Number of People in the Bus
-- Square Every Digit
-- Binary Addition
-- Odd or Even?
-- Beginner Series #3 Sum of Numbers
-- Remove the Minimum
-- Shortest Word
-- Exes and Ohs
+| Kata | Conceptos principales |
+|---|---|
+| Validate PIN Code | Strings, `Length`, `foreach`, `char.IsDigit()`, booleanos y validación |
+| Is this a Triangle? | Expresiones booleanas, operadores `&&`, comparaciones, métodos auxiliares y `TryParse()` |
+| Vowel Count | Strings, `char`, `foreach`, `Contains()` y contadores |
+| Find the Next Perfect Square! | `Math.Sqrt()`, casting, `long`, operador ternario y precisión numérica |
+| Sum of Odd Numbers | Bucles `for`, acumuladores, fórmulas matemáticas, secuencias y `long` |
+| Two to One | Strings, `Contains()`, recorrido de caracteres, eliminación de duplicados y orden alfabético |
+| Mumbling | Bucles anidados, índices, `char.ToUpper()`, `char.ToLower()` y construcción de strings |
+| Jaden Case | Strings, índices, bucles `for`, condicionales, `char.ToUpper()` y métodos de extensión |
+| Categorize New Member | `int[][]`, índices anidados, `List<string>`, `IEnumerable<string>`, operador ternario y `&&` |
+| Reverse Words | Strings, índices, bucles anidados, cortocircuito, inversión manual y conservación de espacios |
+| You're a Square! | `Math.Sqrt()`, `Math.Pow()`, casting, cuadrados perfectos y expresiones booleanas |
+| Number of People in the Bus | `List<int[]>`, estructuras anidadas, índices, `.Count` y acumuladores |
+| Square Every Digit | Conversión entre números, `char` y strings, bucles `for`, `*=` y concatenación |
+| Binary Addition | Operador `%`, división entera, bucles `while`, inversión de strings y sistema binario |
+| Odd or Even? | `foreach`, acumuladores, operador `%`, operador ternario y arrays vacíos |
+| Beginner Series #3 Sum of Numbers | `while`, acumuladores, `++`, `--`, condicionales y números positivos y negativos |
+| Remove the Minimum | `List<int>`, copia vs referencia, mínimos, `Remove()`, `RemoveAt()` y listas vacías |
+| Shortest Word | Strings, índices, `Length`, búsqueda de mínimos, `i + 1` y cortocircuito con `||` |
+| Exes and Ohs | LINQ, `Count()`, expresiones lambda, `char.ToLower()` y comparación de cantidades |
 
 ---
 
