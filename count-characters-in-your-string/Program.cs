@@ -2,7 +2,7 @@
  * en un string dado como un Dictionary.
  * Si tú tienes un string como "aba", entonces el resultado sería:
  * {'a': 2, 'b': 1}.
- * Y si el string está vacío se devuelve un array vacío.
+ * Y si el dictionary está vacío se devuelve un dictionary vacío.
  */
 
 using System.Collections.Generic;
@@ -36,7 +36,7 @@ public class Kata
             }
         }
 
-        return dictionary;
+        return dictionary; 
     }
 }
 

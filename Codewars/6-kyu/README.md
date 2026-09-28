@@ -6,13 +6,16 @@ Ejercicios de nivel **6 kyu** realizados en C#. En estas katas aparecen problema
 
 ## Katas incluidas
 
-- Equal Sides Of An Array
-- Replace With Alphabet Position
-- Build Tower
-- Count the Smiley Faces!
-- Take a Ten Minute Walk
-- Bouncing Balls
-- Take a Number And Sum Its Digits Raised To The Consecutive Powers And ....¡Eureka!!
+| Kata | Conceptos principales |
+|---|---|
+| Equal Sides Of An Array | Arrays, bucles anidados, acumuladores |
+| Replace With Alphabet Position | Strings, `char`, conversión de caracteres |
+| Build Tower | Arrays de strings, bucles anidados, posiciones |
+| Count the Smiley Faces! | Arrays, booleanos, validación por posiciones |
+| Take a Ten Minute Walk | `foreach`, contadores, lógica |
+| Bouncing Balls | `while`, `double`, acumuladores |
+| Sum Dig Power | `Math.Pow`, `List<long>`, conversión de tipos |
+| Count characters in your string | `Dictionary<char, int>`, `ContainsKey()`, `Add()`, `KeyValuePair`, contadores |
 
 ---
 
@@ -2277,6 +2280,355 @@ stringNumber[f] - '0'
 permite obtener correctamente el valor del dígito.
 
 También se utilizó el depurador de Visual Studio para observar paso a paso cómo iban cambiando las variables durante la ejecución, evitando depender únicamente de `Console.WriteLine` para comprobar el funcionamiento interno del algoritmo.
+
+---
+
+## Count characters in your string — 6 kyu
+
+La función recibe un `string` y debe devolver un `Dictionary<char, int>` donde:
+
+- La clave representa cada carácter diferente encontrado.
+- El valor representa el número de veces que aparece ese carácter.
+
+Por ejemplo:
+
+```text
+"aba"
+```
+
+debe producir:
+
+```text
+'a' → 2
+'b' → 1
+```
+
+Si el string está vacío, se devuelve un `Dictionary` vacío.
+
+### Solución
+
+```csharp
+using System.Collections.Generic;
+using System;
+
+public class Kata
+{
+    public static Dictionary<char, int> Count(string str)
+    {
+        Dictionary<char, int> dictionary = new Dictionary<char, int>();
+        char repeatCharacter;
+        int charCounter = 0;
+
+        for (int i = 0; i < str.Length; i++)
+        {
+            if (!dictionary.ContainsKey(str[i]))
+            {
+                repeatCharacter = str[i];
+
+                for (int f = 0; f < str.Length; f++)
+                {
+                    if (str[f] == repeatCharacter)
+                    {
+                        charCounter++;
+                    }
+                }
+
+                dictionary.Add(repeatCharacter, charCounter);
+
+                charCounter = 0;
+            }
+        }
+
+        return dictionary;
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine("\nPrueba 1:\n");
+
+        foreach (KeyValuePair<char, int> valor in Kata.Count("aba"))
+        {
+            Console.WriteLine($"Letra: {valor.Key} - " +
+                $"Contador: {valor.Value}.");
+        }
+
+        Console.WriteLine("\nPrueba 2:\n");
+
+        foreach (KeyValuePair<char, int> valor in Kata.Count("Mi coche está cerrado."))
+        {
+            Console.WriteLine($"Letra: {valor.Key} - " +
+                $"Contador: {valor.Value}.");
+        }
+    }
+}
+```
+
+### Conceptos reforzados
+
+- Uso de `Dictionary<TKey, TValue>`.
+- Uso de caracteres como claves mediante `Dictionary<char, int>`.
+- Uso de `ContainsKey()`.
+- Uso de `Add()`.
+- Recorrido de strings mediante índices.
+- Bucles `for` anidados.
+- Uso de contadores.
+- Uso de `KeyValuePair<TKey, TValue>`.
+- Acceso a las propiedades `Key` y `Value`.
+- Evitar procesar varias veces un mismo carácter.
+- Devolución de un `Dictionary` vacío de forma natural cuando el string no contiene elementos.
+
+### Funcionamiento
+
+Primero se crea un diccionario vacío:
+
+```csharp
+Dictionary<char, int> dictionary =
+    new Dictionary<char, int>();
+```
+
+Cada entrada tendrá esta estructura:
+
+```text
+carácter → número de apariciones
+```
+
+Por ejemplo:
+
+```text
+'a' → 2
+'b' → 1
+```
+
+Después se recorre todo el string:
+
+```csharp
+for (int i = 0; i < str.Length; i++)
+```
+
+El carácter situado en `str[i]` será el carácter que se quiere analizar.
+
+### Evitar contar dos veces el mismo carácter
+
+Antes de contar las apariciones se comprueba:
+
+```csharp
+if (!dictionary.ContainsKey(str[i]))
+```
+
+Esto significa:
+
+```text
+Si este carácter todavía NO existe como clave
+en el Dictionary, hay que contarlo.
+```
+
+Por ejemplo, para:
+
+```text
+"aba"
+```
+
+cuando se encuentra la primera `a`, todavía no existe:
+
+```text
+dictionary.ContainsKey('a') → false
+```
+
+por lo que se cuentan sus apariciones.
+
+Cuando posteriormente se alcanza la segunda `a`:
+
+```text
+dictionary.ContainsKey('a') → true
+```
+
+y ya no es necesario volver a contarla.
+
+### Contar las apariciones
+
+El carácter actual se almacena en:
+
+```csharp
+repeatCharacter = str[i];
+```
+
+Después se realiza un segundo recorrido completo del string:
+
+```csharp
+for (int f = 0; f < str.Length; f++)
+```
+
+Cada vez que aparece el mismo carácter:
+
+```csharp
+if (str[f] == repeatCharacter)
+{
+    charCounter++;
+}
+```
+
+se incrementa su contador.
+
+Para:
+
+```text
+"aba"
+```
+
+si:
+
+```text
+repeatCharacter = 'a'
+```
+
+el recorrido encuentra:
+
+```text
+posición 0 → 'a' → contador = 1
+posición 1 → 'b'
+posición 2 → 'a' → contador = 2
+```
+
+Por tanto:
+
+```text
+'a' → 2
+```
+
+### Añadir el resultado al Dictionary
+
+Después de contar todas las apariciones:
+
+```csharp
+dictionary.Add(repeatCharacter, charCounter);
+```
+
+se guarda:
+
+```text
+clave  → repeatCharacter
+valor  → charCounter
+```
+
+Después se reinicia:
+
+```csharp
+charCounter = 0;
+```
+
+para poder contar el siguiente carácter diferente.
+
+### String vacío
+
+Si:
+
+```csharp
+str = "";
+```
+
+entonces:
+
+```csharp
+str.Length == 0
+```
+
+y el bucle:
+
+```csharp
+for (int i = 0; i < str.Length; i++)
+```
+
+no se ejecuta ninguna vez.
+
+Por ello, se devuelve directamente el `Dictionary` vacío sin necesidad de realizar una comprobación especial.
+
+### Aprendizaje
+
+La solución se planteó siguiendo esta idea:
+
+```text
+1. Seleccionar un carácter.
+2. Comprobar si ya ha sido procesado.
+3. Si todavía no existe en el Dictionary:
+   - recorrer todo el string;
+   - contar cuántas veces aparece;
+   - guardar carácter y contador.
+4. Continuar con el siguiente carácter.
+```
+
+El `Dictionary` permite relacionar directamente:
+
+```text
+carácter → número de apariciones
+```
+
+y `ContainsKey()` permite saber si un carácter ya ha sido contado anteriormente.
+
+Una parte importante del ejercicio fue comprender mejor cómo un `Dictionary` almacena parejas de:
+
+```text
+Key → Value
+```
+
+y cómo se puede utilizar la clave para identificar cada carácter diferente.
+
+### Otra posible aproximación
+
+Después de resolver la kata con dos bucles, puede aprovecharse el propio valor almacenado en el `Dictionary` como contador.
+
+En lugar de volver a recorrer todo el string para cada carácter, se puede realizar un único recorrido:
+
+```csharp
+public static Dictionary<char, int> Count(string str)
+{
+    Dictionary<char, int> dictionary =
+        new Dictionary<char, int>();
+
+    foreach (char character in str)
+    {
+        if (dictionary.ContainsKey(character))
+        {
+            dictionary[character]++;
+        }
+        else
+        {
+            dictionary.Add(character, 1);
+        }
+    }
+
+    return dictionary;
+}
+```
+
+En esta versión:
+
+```text
+Primera aparición → se crea con valor 1.
+Nueva aparición    → se incrementa el valor existente.
+```
+
+Para:
+
+```text
+"aba"
+```
+
+el proceso sería:
+
+```text
+'a' → no existe → a = 1
+'b' → no existe → b = 1
+'a' → ya existe → a = 2
+```
+
+La solución principal se mantiene porque representa el algoritmo utilizado originalmente para resolver el ejercicio antes de conocer esta simplificación.
 
 ---
 
