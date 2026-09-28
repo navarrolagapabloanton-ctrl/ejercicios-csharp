@@ -1,7 +1,6 @@
 # Codewars — 8 kyu
 
-[← Volver al README principal](../../)
-
+[← Volver al README principal](https://github.com/navarrolagapabloanton-ctrl/ejercicios-csharp)
 Ejercicios de nivel **8 kyu** realizados durante mi aprendizaje de C#.
 
 ## Katas incluidas

@@ -1,6 +1,6 @@
 # Codewars — 7 kyu
 
-[← Volver al README principal](../../)
+[← Volver al README principal](https://github.com/navarrolagapabloanton-ctrl/ejercicios-csharp)
 
 Ejercicios de nivel **7 kyu** realizados en C#. Esta sección refleja la progresión desde soluciones muy manuales hasta el uso puntual de herramientas más idiomáticas del lenguaje.
 
