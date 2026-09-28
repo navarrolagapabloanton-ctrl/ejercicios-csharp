@@ -1,6 +1,6 @@
 # Codewars — 7 kyu
 
-[← Volver al README principal](./README.md)
+[← Volver al README principal](../../)
 
 Ejercicios de nivel **7 kyu** realizados en C#. Esta sección refleja la progresión desde soluciones muy manuales hasta el uso puntual de herramientas más idiomáticas del lenguaje.
 

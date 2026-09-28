@@ -1,6 +1,6 @@
 # Codewars — 8 kyu
 
-[← Volver al README principal](./README.md)
+[← Volver al README principal](../../)
 
 Ejercicios de nivel **8 kyu** realizados durante mi aprendizaje de C#.
 

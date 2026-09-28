@@ -1,6 +1,6 @@
 # Codewars — 6 kyu
 
-[← Volver al README principal](./README.md)
+[← Volver al README principal](../../)
 
 Ejercicios de nivel **6 kyu** realizados en C#. En estas katas aparecen problemas con algo más de análisis, transformaciones de datos, bucles anidados y estructuras de colección.
 
