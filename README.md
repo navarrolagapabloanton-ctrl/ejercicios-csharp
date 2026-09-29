@@ -427,7 +427,7 @@ Para que el README principal no crezca demasiado, las katas están separadas por
 |---|---:|---|
 | 8 kyu | 3 | [Ver ejercicios de 8 kyu](./Codewars/8-kyu/README.md) |
 | 7 kyu | 19 | [Ver ejercicios de 7 kyu](./Codewars/7-kyu/README.md) |
-| 6 kyu | 9 | [Ver ejercicios de 6 kyu](./Codewars/6-kyu/README.md) |
+| 6 kyu | 10 | [Ver ejercicios de 6 kyu](./Codewars/6-kyu/README.md) |
 
 En cada README mantengo las soluciones, versiones ejecutables, conceptos reforzados y aprendizajes de cada kata.
 

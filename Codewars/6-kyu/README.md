@@ -17,6 +17,7 @@ Ejercicios de nivel **6 kyu** realizados en C#. En estas katas aparecen problema
 | Sum Dig Power | `Math.Pow`, `List<long>`, conversión de tipos |
 | Count characters in your string | `Dictionary<char, int>`, `ContainsKey()`, `Add()`, `KeyValuePair`, contadores |
 | Find the odd int | LINQ, `Count()`, lambdas, `foreach`, módulo `%` y conteo de apariciones |
+| Duplicate Encoder | LINQ, `Count()`, lambdas, `ToLower()`, `foreach` y transformación de strings |
 
 ---
 
@@ -2952,6 +2953,394 @@ public static int find_it(int[] seq)
 Esta versión permite ver explícitamente el recorrido que `Count()` realiza internamente.
 
 La solución principal mantiene LINQ porque permite expresar de forma clara y compacta la misma idea.
+
+---
+
+## Duplicate Encoder — 6 kyu
+
+La función recibe un `string` y debe transformarlo en otro `string` siguiendo estas reglas:
+
+- Si un carácter aparece **una sola vez**, se sustituye por `(`.
+- Si un carácter aparece **más de una vez**, se sustituye por `)`.
+- Las mayúsculas y minúsculas deben considerarse iguales.
+
+Por ejemplo:
+
+```text
+"din"
+```
+
+Cada carácter aparece una sola vez:
+
+```text
+d → (
+i → (
+n → (
+```
+
+Resultado:
+
+```text
+(((
+```
+
+Otro ejemplo:
+
+```text
+"recede"
+```
+
+Las letras `e` aparecen varias veces:
+
+```text
+r → (
+e → )
+c → (
+e → )
+d → (
+e → )
+```
+
+Resultado:
+
+```text
+()()()
+```
+
+### Solución
+
+```csharp
+using System.Linq;
+
+public class Kata
+{
+    public static string DuplicateEncode(string word)
+    {
+        word = word.ToLower();
+
+        string newWord = "";
+
+        foreach (char character in word)
+        {
+            if (word.Count(s => s == character) > 1)
+            {
+                newWord += ')';
+            }
+            else
+            {
+                newWord += '(';
+            }
+        }
+
+        return newWord;
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{ 
+    public static void Main(string[] args)
+    {
+        Console.WriteLine(Kata.DuplicateEncode("din"));
+        Console.WriteLine(Kata.DuplicateEncode("recede"));
+        Console.WriteLine(Kata.DuplicateEncode("Success"));
+        Console.WriteLine(Kata.DuplicateEncode("(( @"));
+    }
+}
+```
+
+### Conceptos reforzados
+
+- Recorrido de un `string` mediante `foreach`.
+- Uso de `char`.
+- Uso de LINQ.
+- Uso de `Count()` con una condición.
+- Uso de expresiones lambda.
+- Uso de `ToLower()` para ignorar diferencias entre mayúsculas y minúsculas.
+- Construcción progresiva de un nuevo `string`.
+- Uso de `+=` para concatenar caracteres.
+- Transformación de cada elemento según el número de veces que aparece.
+- Diferencia entre transformar la colección recorrida y modificar la variable original.
+
+### Funcionamiento
+
+Primero se convierte todo el texto a minúsculas:
+
+```csharp
+word = word.ToLower();
+```
+
+Esto permite que:
+
+```text
+'S'
+```
+
+y:
+
+```text
+'s'
+```
+
+se consideren el mismo carácter.
+
+Por ejemplo:
+
+```text
+"Success"
+```
+
+pasa a ser:
+
+```text
+"success"
+```
+
+De esta forma, las comparaciones posteriores no tienen que preocuparse por las mayúsculas.
+
+### Recorrido de los caracteres
+
+Después se recorre el string:
+
+```csharp
+foreach (char character in word)
+```
+
+En cada iteración:
+
+```csharp
+character
+```
+
+representa el carácter que se está analizando.
+
+Por ejemplo, para:
+
+```text
+"din"
+```
+
+el recorrido será:
+
+```text
+character = 'd'
+character = 'i'
+character = 'n'
+```
+
+### Contar las apariciones
+
+Para conocer cuántas veces aparece el carácter actual se utiliza:
+
+```csharp
+word.Count(s => s == character)
+```
+
+La expresión lambda:
+
+```csharp
+s => s == character
+```
+
+puede interpretarse como:
+
+```text
+Para cada carácter s del string,
+comprueba si es igual al carácter actual.
+```
+
+`Count()` cuenta únicamente aquellos caracteres para los que la condición devuelve `true`.
+
+Por ejemplo:
+
+```text
+word = "recede"
+character = 'e'
+```
+
+la comparación sería:
+
+```text
+'r' == 'e' → false
+'e' == 'e' → true
+'c' == 'e' → false
+'e' == 'e' → true
+'d' == 'e' → false
+'e' == 'e' → true
+```
+
+Por tanto:
+
+```csharp
+word.Count(s => s == character)
+```
+
+devuelve:
+
+```text
+3
+```
+
+### Elegir `(` o `)`
+
+La condición utilizada es:
+
+```csharp
+if (word.Count(s => s == character) > 1)
+```
+
+Si el carácter aparece más de una vez:
+
+```csharp
+newWord += ')';
+```
+
+Si solamente aparece una vez:
+
+```csharp
+newWord += '(';
+```
+
+De esta forma se va construyendo progresivamente el nuevo string.
+
+### Importancia de `ToLower()`
+
+Una de las partes importantes de esta kata fue comprender dónde debía realizarse la conversión a minúsculas.
+
+Una primera posibilidad era recorrer:
+
+```csharp
+foreach (char character in word.ToLower())
+```
+
+Sin embargo, esto únicamente hace que el `foreach` recorra una versión en minúsculas.
+
+La variable original:
+
+```csharp
+word
+```
+
+seguiría conservando las mayúsculas.
+
+Por tanto, en:
+
+```csharp
+word.Count(s => s == character)
+```
+
+`Count()` seguiría recorriendo el string original.
+
+Por ejemplo:
+
+```text
+word = "Success"
+```
+
+aunque el `foreach` produjera:
+
+```text
+s u c c e s s
+```
+
+el `Count()` seguiría viendo:
+
+```text
+S u c c e s s
+```
+
+y:
+
+```text
+'S' != 's'
+```
+
+Por eso resulta más sencillo normalizar el string una sola vez al principio:
+
+```csharp
+word = word.ToLower();
+```
+
+A partir de ese momento, tanto el `foreach` como `Count()` trabajan sobre la misma versión del texto.
+
+### Aprendizaje
+
+Esta kata reutiliza una idea aprendida anteriormente:
+
+```csharp
+Count(elemento => condicion)
+```
+
+En este caso:
+
+```csharp
+word.Count(s => s == character)
+```
+
+permite contar cuántas veces aparece cada carácter.
+
+La lógica seguida es:
+
+```text
+1. Convertir todo el string a minúsculas.
+2. Recorrer cada carácter.
+3. Contar cuántas veces aparece.
+4. Si aparece más de una vez → añadir ')'.
+5. Si aparece una sola vez → añadir '('.
+6. Devolver el nuevo string.
+```
+
+También reforcé el funcionamiento de las expresiones lambda.
+
+En:
+
+```csharp
+s => s == character
+```
+
+`s` es una variable temporal que representa cada carácter que `Count()` va recorriendo.
+
+Podría llamarse de cualquier otra manera:
+
+```csharp
+word.Count(c => c == character)
+```
+
+o:
+
+```csharp
+word.Count(letter => letter == character)
+```
+
+El nombre elegido no cambia el funcionamiento.
+
+### Otra posible aproximación
+
+También podría utilizarse `Select()` para transformar directamente cada carácter:
+
+```csharp
+public static string DuplicateEncode(string word)
+{
+    word = word.ToLower();
+
+    return string.Concat(
+        word.Select(character =>
+            word.Count(c => c == character) > 1 ? ')' : '(')
+    );
+}
+```
+
+En esta versión, `Select()` transforma cada carácter en:
+
+```text
+')' si está repetido
+'(' si no está repetido
+```
+
+La solución principal se mantiene porque permite ver de forma más clara el recorrido, la condición y la construcción progresiva del resultado.
 
 ---
 
