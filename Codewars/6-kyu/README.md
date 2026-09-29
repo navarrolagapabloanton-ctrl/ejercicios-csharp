@@ -18,6 +18,7 @@ Ejercicios de nivel **6 kyu** realizados en C#. En estas katas aparecen problema
 | Count characters in your string | `Dictionary<char, int>`, `ContainsKey()`, `Add()`, `KeyValuePair`, contadores |
 | Find the odd int | LINQ, `Count()`, lambdas, `foreach`, módulo `%` y conteo de apariciones |
 | Duplicate Encoder | LINQ, `Count()`, lambdas, `ToLower()`, `foreach` y transformación de strings |
+| Playing with digits | `ToString()`, conversión de dígitos, `Math.Pow()`, acumuladores, `%`, divisibilidad y potencias consecutivas |
 
 ---
 
@@ -3341,6 +3342,437 @@ En esta versión, `Select()` transforma cada carácter en:
 ```
 
 La solución principal se mantiene porque permite ver de forma más clara el recorrido, la condición y la construcción progresiva del resultado.
+
+---
+
+## Playing with digits — 6 kyu
+
+Algunos números tienen una propiedad especial relacionada con sus dígitos.
+
+Dado un número positivo `n` y una potencia inicial `p`, se toman los dígitos de `n` y se elevan a potencias consecutivas empezando por `p`.
+
+Por ejemplo:
+
+```text
+89
+
+8¹ + 9²
+= 8 + 81
+= 89
+= 89 × 1
+```
+
+Por tanto:
+
+```text
+k = 1
+```
+
+Otro ejemplo:
+
+```text
+695
+
+6² + 9³ + 5⁴
+= 36 + 729 + 625
+= 1390
+
+1390 = 695 × 2
+```
+
+Por tanto:
+
+```text
+k = 2
+```
+
+El objetivo es encontrar un entero positivo `k` que cumpla:
+
+```text
+aᵖ + bᵖ⁺¹ + cᵖ⁺² + dᵖ⁺³ + … = n × k
+```
+
+Si existe, se devuelve `k`.
+
+Si no existe, se devuelve:
+
+```text
+-1
+```
+
+### Solución
+
+```csharp
+using System;
+
+public class DigPow
+{
+    public static long digPow(int n, int p)
+    {
+        string numberN = n.ToString();
+        long digit;
+        long result = 0;
+
+        for (int i = 0; i < numberN.Length; i++)
+        {
+            digit = long.Parse(numberN[i].ToString());
+            result += (long)Math.Pow(digit, p + i);
+        }
+
+        if (result % n == 0)
+        {
+            long k = result / n;
+
+            return k;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine(DigPow.digPow(89, 1));
+        Console.WriteLine(DigPow.digPow(92, 1));
+        Console.WriteLine(DigPow.digPow(695, 2));
+        Console.WriteLine(DigPow.digPow(46288, 3));
+    }
+}
+```
+
+### Conceptos reforzados
+
+- Conversión de un número a `string` mediante `ToString()`.
+- Recorrido de los dígitos de un número mediante índices.
+- Conversión de un `char` numérico a un valor numérico.
+- Uso de `Math.Pow()`.
+- Uso de potencias consecutivas.
+- Relación entre el índice `i` y la potencia `p + i`.
+- Uso de un acumulador.
+- Uso del operador módulo `%`.
+- Comprobación de divisibilidad.
+- Uso de división para obtener un factor desconocido.
+- Trabajo con valores `long`.
+- Traducción de una fórmula matemática a un algoritmo.
+
+### Funcionamiento
+
+Primero se convierte el número `n` a un `string`:
+
+```csharp
+string numberN = n.ToString();
+```
+
+Esto permite recorrer sus dígitos de izquierda a derecha mediante índices.
+
+Por ejemplo:
+
+```text
+n = 695
+```
+
+se convierte en:
+
+```text
+"695"
+```
+
+Por tanto:
+
+```text
+numberN[0] → '6'
+numberN[1] → '9'
+numberN[2] → '5'
+```
+
+### Obtener cada dígito
+
+Cada carácter se convierte de nuevo en un número mediante:
+
+```csharp
+digit = long.Parse(numberN[i].ToString());
+```
+
+Por ejemplo:
+
+```text
+numberN[i]       → '6'
+.ToString()      → "6"
+long.Parse(...)  → 6
+```
+
+De esta forma se puede utilizar posteriormente el dígito en operaciones matemáticas.
+
+### Potencias consecutivas
+
+El recorrido utiliza:
+
+```csharp
+for (int i = 0; i < numberN.Length; i++)
+```
+
+y la potencia de cada dígito se calcula mediante:
+
+```csharp
+p + i
+```
+
+Esto permite que las potencias aumenten automáticamente en cada posición.
+
+Por ejemplo:
+
+```text
+n = 695
+p = 2
+```
+
+El recorrido sería:
+
+```text
+i = 0 → dígito 6 → potencia 2 + 0 = 2
+i = 1 → dígito 9 → potencia 2 + 1 = 3
+i = 2 → dígito 5 → potencia 2 + 2 = 4
+```
+
+Por tanto:
+
+```text
+6² + 9³ + 5⁴
+```
+
+La operación se realiza mediante:
+
+```csharp
+result += (long)Math.Pow(digit, p + i);
+```
+
+`Math.Pow()` devuelve un `double`, por lo que el resultado se convierte a `long`.
+
+### Uso del acumulador
+
+La variable:
+
+```csharp
+long result = 0;
+```
+
+va almacenando la suma de todas las potencias.
+
+Para:
+
+```text
+695, 2
+```
+
+el proceso es:
+
+```text
+6² = 36
+result = 36
+
+9³ = 729
+result = 765
+
+5⁴ = 625
+result = 1390
+```
+
+Al terminar:
+
+```text
+result = 1390
+```
+
+### Encontrar `k`
+
+Una vez calculada la suma, necesitamos comprobar si existe un número entero `k` que cumpla:
+
+```text
+result = n × k
+```
+
+En lugar de buscar posibles valores de `k`, se comprueba directamente si `result` es divisible entre `n`:
+
+```csharp
+if (result % n == 0)
+```
+
+Si el resto es `0`, la división es exacta y existe un valor entero de `k`.
+
+Entonces:
+
+```csharp
+long k = result / n;
+```
+
+Para:
+
+```text
+result = 1390
+n = 695
+```
+
+tenemos:
+
+```text
+1390 % 695 = 0
+```
+
+y:
+
+```text
+1390 / 695 = 2
+```
+
+Por tanto:
+
+```text
+k = 2
+```
+
+Si la división no es exacta:
+
+```csharp
+return -1;
+```
+
+### Ejemplo sin solución
+
+Para:
+
+```text
+n = 92
+p = 1
+```
+
+se calcula:
+
+```text
+9¹ + 2²
+= 9 + 4
+= 13
+```
+
+Como:
+
+```text
+13 % 92 != 0
+```
+
+no existe un entero positivo `k` que cumpla:
+
+```text
+13 = 92 × k
+```
+
+Por tanto, se devuelve:
+
+```text
+-1
+```
+
+### Aprendizaje
+
+Una de las decisiones de esta kata fue cómo separar un número en sus dígitos.
+
+Una posibilidad sería trabajar matemáticamente utilizando:
+
+```csharp
+n % 10
+```
+
+para obtener el último dígito y:
+
+```csharp
+n /= 10;
+```
+
+para eliminarlo.
+
+Sin embargo, este procedimiento obtiene los dígitos de derecha a izquierda.
+
+Por ejemplo:
+
+```text
+695
+```
+
+se obtendría como:
+
+```text
+5
+9
+6
+```
+
+En esta kata el orden es importante porque cada dígito recibe una potencia diferente:
+
+```text
+6²
+9³
+5⁴
+```
+
+Por ello, convertir el número a un `string` permite recorrer los dígitos directamente en el orden original:
+
+```text
+6 → 9 → 5
+```
+
+La lógica del algoritmo puede resumirse como:
+
+```text
+1. Convertir n a string.
+2. Recorrer sus dígitos de izquierda a derecha.
+3. Convertir cada carácter en un número.
+4. Elevarlo a p + i.
+5. Acumular los resultados.
+6. Comprobar si la suma es divisible entre n.
+7. Si lo es, calcular k = resultado / n.
+8. Si no, devolver -1.
+```
+
+### Otra forma de convertir el carácter a número
+
+La conversión:
+
+```csharp
+digit = long.Parse(numberN[i].ToString());
+```
+
+también puede escribirse utilizando la posición de los caracteres numéricos:
+
+```csharp
+long digit = numberN[i] - '0';
+```
+
+Por ejemplo:
+
+```text
+'6' - '0' → 6
+'9' - '0' → 9
+'5' - '0' → 5
+```
+
+Así, el bucle podría escribirse:
+
+```csharp
+for (int i = 0; i < numberN.Length; i++)
+{
+    long digit = numberN[i] - '0';
+    result += (long)Math.Pow(digit, p + i);
+}
+```
+
+La solución principal mantiene `long.Parse()` porque fue la forma utilizada originalmente para resolver la kata.
 
 ---
 
