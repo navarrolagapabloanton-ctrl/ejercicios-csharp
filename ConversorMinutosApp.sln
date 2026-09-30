@@ -111,6 +111,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "duplicate-encoder", "duplic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "playing-with-digits", "playing-with-digits\playing-with-digits.csproj", "{B0DEEDAF-1E61-4272-BA0E-D5903F03DE7B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "consecutive-strings", "consecutive-strings\consecutive-strings.csproj", "{79C420B6-E3BF-44F3-A8F1-AFB7677AE694}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -333,6 +335,10 @@ Global
 		{B0DEEDAF-1E61-4272-BA0E-D5903F03DE7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0DEEDAF-1E61-4272-BA0E-D5903F03DE7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0DEEDAF-1E61-4272-BA0E-D5903F03DE7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79C420B6-E3BF-44F3-A8F1-AFB7677AE694}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79C420B6-E3BF-44F3-A8F1-AFB7677AE694}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79C420B6-E3BF-44F3-A8F1-AFB7677AE694}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79C420B6-E3BF-44F3-A8F1-AFB7677AE694}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

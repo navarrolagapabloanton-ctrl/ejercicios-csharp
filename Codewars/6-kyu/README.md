@@ -19,6 +19,7 @@ Ejercicios de nivel **6 kyu** realizados en C#. En estas katas aparecen problema
 | Find the odd int | LINQ, `Count()`, lambdas, `foreach`, módulo `%` y conteo de apariciones |
 | Duplicate Encoder | LINQ, `Count()`, lambdas, `ToLower()`, `foreach` y transformación de strings |
 | Playing with digits | `ToString()`, conversión de dígitos, `Math.Pow()`, acumuladores, `%`, divisibilidad y potencias consecutivas |
+| Consecutive strings | Arrays, bucles anidados, índices, concatenación, máximos, grupos consecutivos, `Skip()`, `Take()` y rangos |
 
 ---
 
@@ -3773,6 +3774,627 @@ for (int i = 0; i < numberN.Length; i++)
 ```
 
 La solución principal mantiene `long.Parse()` porque fue la forma utilizada originalmente para resolver la kata.
+
+---
+
+## Consecutive strings — 6 kyu
+
+La función recibe:
+
+- Un array de strings `strarr`.
+- Un número entero `k`.
+
+El objetivo es encontrar el **primer string de mayor longitud** que pueda formarse concatenando `k` elementos consecutivos del array, manteniendo su orden original.
+
+Por ejemplo:
+
+```text
+["zone", "abigail", "theta", "form"]
+
+k = 2
+```
+
+Las posibles concatenaciones son:
+
+```text
+"zone" + "abigail"
+"abigail" + "theta"
+"theta" + "form"
+```
+
+Después se compara la longitud de cada resultado y se devuelve el primero que tenga la mayor longitud.
+
+Si:
+
+```text
+n = número de elementos del array
+```
+
+se debe devolver un string vacío cuando:
+
+```text
+n == 0
+k > n
+k <= 0
+```
+
+### Solución
+
+```csharp
+public class LongestConsecutives
+{
+    public static string LongestConsec(string[] strarr, int k)
+    {
+        string longestWord = "";
+        int n = strarr.Length;
+
+        if (n == 0 || k > n || k <= 0)
+        {
+            return "";
+        }
+
+        for (int i = 0; i < n; i++)
+        {
+            string newWord = strarr[i];
+
+            if (n >= i + k)
+            {
+                newWord = "";
+
+                for (int f = i; f < i + k; f++)
+                {
+                    newWord += strarr[f];
+                }
+            }
+
+            if (newWord.Length > longestWord.Length)
+            {
+                longestWord = newWord;
+            }
+        }
+
+        return longestWord;
+    }
+}
+```
+
+### Versión ejecutable
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        string[] array1 =
+        {
+            "zone", "abigail", "theta", "form",
+            "libe", "zas", "theta", "abigail"
+        };
+
+        string[] array2 =
+        {
+            "ejjjjmmtthh", "zxxuueeg", "aanlljrrrxx",
+            "dqqqaaabbb", "oocccffuucccjjjkkkjyyyeehh"
+        };
+
+        string[] array3 = { };
+
+        string[] array4 =
+        {
+            "itvayloxrp",
+            "wkppqsztdkmvcuwvereiupccauycnjutlv",
+            "vweqilsfytihvrzlaodfixoyxvyuyvgpck"
+        };
+
+        string[] array5 =
+        {
+            "wlwsasphmxx",
+            "owiaxujylentrklctozmymu",
+            "wpgozvxxiu"
+        };
+
+        string[] array6 =
+        {
+            "zone", "abigail", "theta",
+            "form", "libe", "zas"
+        };
+
+        string[] array7 =
+        {
+            "it", "wkppv", "ixoyx", "3452",
+            "zzzzzzzzzzzz"
+        };
+
+        string[] array8 =
+        {
+            "it", "wkppv", "ixoyx", "3452",
+            "zzzzzzzzzzzz"
+        };
+
+        string[] array9 =
+        {
+            "it", "wkppv", "ixoyx", "3452",
+            "zzzzzzzzzzzz"
+        };
+
+        Console.WriteLine(
+            LongestConsecutives.LongestConsec(array1, 2)
+        );
+
+        Console.WriteLine(
+            LongestConsecutives.LongestConsec(array2, 1)
+        );
+
+        Console.WriteLine(
+            LongestConsecutives.LongestConsec(array3, 3)
+        );
+
+        Console.WriteLine(
+            LongestConsecutives.LongestConsec(array4, 2)
+        );
+
+        Console.WriteLine(
+            LongestConsecutives.LongestConsec(array5, 2)
+        );
+
+        Console.WriteLine(
+            LongestConsecutives.LongestConsec(array6, -2)
+        );
+
+        Console.WriteLine(
+            LongestConsecutives.LongestConsec(array7, 3)
+        );
+
+        Console.WriteLine(
+            LongestConsecutives.LongestConsec(array8, 15)
+        );
+
+        Console.WriteLine(
+            LongestConsecutives.LongestConsec(array9, 0)
+        );
+    }
+}
+```
+
+### Conceptos reforzados
+
+- Recorrido de arrays mediante `for`.
+- Uso de bucles anidados.
+- Concatenación de strings.
+- Trabajo con grupos de elementos consecutivos.
+- Uso de `Length`.
+- Uso de índices.
+- Cálculo de límites dentro de un array.
+- Comparación de longitudes.
+- Búsqueda de un máximo.
+- Conservación del primer resultado en caso de empate.
+- Validación de parámetros.
+- Construcción de una especie de ventana de tamaño `k`.
+
+### Funcionamiento
+
+Primero se guarda el número de elementos del array:
+
+```csharp
+int n = strarr.Length;
+```
+
+Después se comprueban los casos en los que no puede existir una solución válida:
+
+```csharp
+if (n == 0 || k > n || k <= 0)
+{
+    return "";
+}
+```
+
+Esto cubre:
+
+```text
+Array vacío
+k mayor que el número de elementos
+k igual a 0
+k negativo
+```
+
+### Recorrer las posibles posiciones iniciales
+
+El primer `for` controla desde qué posición del array comienza cada grupo:
+
+```csharp
+for (int i = 0; i < n; i++)
+```
+
+Por ejemplo:
+
+```text
+["zone", "abigail", "theta", "form"]
+
+k = 2
+```
+
+se intenta comenzar desde:
+
+```text
+i = 0
+i = 1
+i = 2
+i = 3
+```
+
+Sin embargo, solo se pueden concatenar `k` palabras si todavía quedan suficientes elementos.
+
+Por eso se comprueba:
+
+```csharp
+if (n >= i + k)
+```
+
+### Concatenar `k` elementos consecutivos
+
+Si todavía existen suficientes elementos, se crea un nuevo string:
+
+```csharp
+newWord = "";
+```
+
+y se utiliza un segundo `for`:
+
+```csharp
+for (int f = i; f < i + k; f++)
+{
+    newWord += strarr[f];
+}
+```
+
+El índice:
+
+```csharp
+f
+```
+
+empieza en:
+
+```text
+i
+```
+
+y termina justo antes de:
+
+```text
+i + k
+```
+
+Por ejemplo:
+
+```text
+i = 1
+k = 3
+```
+
+el recorrido será:
+
+```text
+f = 1
+f = 2
+f = 3
+```
+
+Es decir, se concatenan exactamente tres elementos consecutivos.
+
+### Ejemplo
+
+Para:
+
+```text
+["zone", "abigail", "theta", "form"]
+
+k = 2
+```
+
+la primera vuelta genera:
+
+```text
+i = 0
+
+"zone"
++
+"abigail"
+
+→ "zoneabigail"
+```
+
+La siguiente:
+
+```text
+i = 1
+
+"abigail"
++
+"theta"
+
+→ "abigailtheta"
+```
+
+Después:
+
+```text
+i = 2
+
+"theta"
++
+"form"
+
+→ "thetaform"
+```
+
+Cada resultado se compara con el mayor encontrado hasta ese momento.
+
+### Buscar el string más largo
+
+La variable:
+
+```csharp
+string longestWord = "";
+```
+
+almacena el resultado más largo encontrado.
+
+Después de construir cada combinación:
+
+```csharp
+if (newWord.Length > longestWord.Length)
+{
+    longestWord = newWord;
+}
+```
+
+se actualiza únicamente si el nuevo string es estrictamente más largo.
+
+Es importante utilizar:
+
+```csharp
+>
+```
+
+y no:
+
+```csharp
+>=
+```
+
+porque el ejercicio pide devolver el **primer** string de longitud máxima.
+
+Si dos resultados tienen la misma longitud:
+
+```text
+primero  → longitud 15
+segundo  → longitud 15
+```
+
+el segundo no sustituye al primero.
+
+### Aprendizaje
+
+Este ejercicio resultó algo más complejo porque no consiste simplemente en procesar cada elemento individualmente.
+
+Es necesario trabajar con **grupos consecutivos de tamaño `k`**.
+
+El algoritmo planteado fue:
+
+```text
+1. Comprobar que k es válido.
+2. Elegir una posición inicial i.
+3. Tomar k strings consecutivos desde esa posición.
+4. Concatenarlos.
+5. Comparar su longitud con el máximo actual.
+6. Avanzar una posición.
+7. Repetir hasta recorrer todas las combinaciones válidas.
+```
+
+La parte más importante fue controlar correctamente los índices:
+
+```text
+desde i
+hasta i + k
+```
+
+y asegurarse de no intentar acceder fuera del array.
+
+### Una simplificación del recorrido
+
+La solución original recorre:
+
+```csharp
+for (int i = 0; i < n; i++)
+```
+
+y posteriormente comprueba:
+
+```csharp
+if (n >= i + k)
+```
+
+También se puede evitar directamente recorrer posiciones desde las que ya no caben `k` elementos.
+
+La última posición inicial válida es:
+
+```text
+n - k
+```
+
+Por tanto, puede escribirse:
+
+```csharp
+for (int i = 0; i <= n - k; i++)
+```
+
+Así la solución manual podría quedar:
+
+```csharp
+public static string LongestConsec(string[] strarr, int k)
+{
+    string longestWord = "";
+    int n = strarr.Length;
+
+    if (n == 0 || k > n || k <= 0)
+    {
+        return "";
+    }
+
+    for (int i = 0; i <= n - k; i++)
+    {
+        string newWord = "";
+
+        for (int f = i; f < i + k; f++)
+        {
+            newWord += strarr[f];
+        }
+
+        if (newWord.Length > longestWord.Length)
+        {
+            longestWord = newWord;
+        }
+    }
+
+    return longestWord;
+}
+```
+
+Esta versión mantiene exactamente el mismo algoritmo, pero evita recorrer posiciones que no pueden formar un grupo completo.
+
+### Uso de LINQ: `Skip()` y `Take()`
+
+Durante la resolución se buscó si C# disponía de algún método para obtener los siguientes `k` elementos de un array.
+
+Con LINQ existen:
+
+```csharp
+Skip()
+```
+
+y:
+
+```csharp
+Take()
+```
+
+La expresión:
+
+```csharp
+strarr.Skip(i).Take(k)
+```
+
+significa:
+
+```text
+Saltar los primeros i elementos
+y tomar los siguientes k.
+```
+
+Por ejemplo:
+
+```text
+["zone", "abigail", "theta", "form"]
+
+Skip(1)
+```
+
+produce conceptualmente:
+
+```text
+["abigail", "theta", "form"]
+```
+
+Después:
+
+```text
+Take(2)
+```
+
+produce:
+
+```text
+["abigail", "theta"]
+```
+
+Finalmente se pueden unir mediante:
+
+```csharp
+string.Concat(...)
+```
+
+Por tanto:
+
+```csharp
+string newWord =
+    string.Concat(strarr.Skip(i).Take(k));
+```
+
+sustituye al segundo `for`.
+
+Una versión utilizando LINQ sería:
+
+```csharp
+using System.Linq;
+
+public static string LongestConsec(string[] strarr, int k)
+{
+    string longestWord = "";
+    int n = strarr.Length;
+
+    if (n == 0 || k > n || k <= 0)
+    {
+        return "";
+    }
+
+    for (int i = 0; i <= n - k; i++)
+    {
+        string newWord =
+            string.Concat(strarr.Skip(i).Take(k));
+
+        if (newWord.Length > longestWord.Length)
+        {
+            longestWord = newWord;
+        }
+    }
+
+    return longestWord;
+}
+```
+
+### Otra posibilidad: rangos
+
+C# también permite seleccionar una parte de un array utilizando rangos:
+
+```csharp
+strarr[i..(i + k)]
+```
+
+Por ejemplo:
+
+```csharp
+strarr[1..3]
+```
+
+selecciona los índices:
+
+```text
+1
+2
+```
+
+El límite final no está incluido.
+
+Por tanto:
+
+```csharp
+string.Concat(strarr[i..(i + k)])
+```
+
+también permite unir los `k` elementos consecutivos.
+
+La solución principal mantiene los dos bucles porque fue la forma utilizada para construir y comprender inicialmente el algoritmo.
 
 ---
 
